@@ -45,7 +45,7 @@ public class CustomerDaoImpl implements CustomerDao {
 		
 		CustomerDraft customerDraft=CustomerDraftBuilder.of()
 				.firstName(customerSignUp.getFirstName())
-				.lastName(customerSignUp.getLasName())
+				.lastName(customerSignUp.getLastName())
 				.email(customerSignUp.getEmail())
 				.password(customerSignUp.getPassword())
 				.custom(customFieldsDraft)
