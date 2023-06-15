@@ -1,7 +1,7 @@
 
 import './App.css';
 import Login from './components/login';
-import RegisterCustomer from './components/RegisterCutomer'
+import AddProduct from './components/AddProduct'
 import { BrowserRouter,Route,Routes, } from "react-router-dom"
 function App() {
 
@@ -10,7 +10,8 @@ function App() {
     <BrowserRouter>
     <Routes>
     <Route path='/Login' element={<Login/>} />
-    <Route path='/RegisterCustomer' element={<RegisterCustomer/>}/>
+
+     <Route path='/addProducts/:id' element={<AddProduct/>}/> 
     </Routes>
      </BrowserRouter>
      </div>
