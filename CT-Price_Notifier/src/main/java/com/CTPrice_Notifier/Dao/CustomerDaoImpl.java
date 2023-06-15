@@ -7,7 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.CTPrice_Notifier.Config.ProjectApiConfig;
+import com.CTPrice_Notifier.Model.CustomerModelSignUp;
 import com.commercetools.api.models.customer.Customer;
+import com.commercetools.api.models.customer.CustomerDraft;
+import com.commercetools.api.models.customer.CustomerDraftBuilder;
+import com.commercetools.api.models.type.CustomFieldsDraft;
+import com.commercetools.api.models.type.CustomFieldsDraftBuilder;
+import com.commercetools.api.models.type.TypeResourceIdentifier;
+import com.commercetools.api.models.type.TypeResourceIdentifierBuilder;
 
 @Service
 public class CustomerDaoImpl implements CustomerDao {
@@ -22,5 +29,32 @@ public class CustomerDaoImpl implements CustomerDao {
 	                Customer customer = customerOptional.orElseThrow(() -> new RuntimeException("Customer not found"));
 	                return customer;
 				});
+	}
+	
+	public String customerSignUp(CustomerModelSignUp customerSignUp){
+		
+		TypeResourceIdentifier resourceIdentifier=TypeResourceIdentifierBuilder.of()
+				.key("CustomerMobileNumber")
+				.build();
+		
+		CustomFieldsDraft customFieldsDraft=CustomFieldsDraftBuilder.of()
+				.type(resourceIdentifier)
+				//FieldContainerBuilder
+				.fields(t -> t.addValue("Customer-mobile-number", customerSignUp.getMobileNumber()))
+				.build();
+		
+		CustomerDraft customerDraft=CustomerDraftBuilder.of()
+				.firstName(customerSignUp.getFirstName())
+				.lastName(customerSignUp.getLasName())
+				.email(customerSignUp.getEmail())
+				.password(customerSignUp.getPassword())
+				.custom(customFieldsDraft)
+				.build();
+		apiConfig.createApiClient().customers().post(customerDraft).execute()
+		   .thenApply(t -> {
+			   return t.getBody();
+		   });
+		return "Customer Created";
+		
 	}
 }
