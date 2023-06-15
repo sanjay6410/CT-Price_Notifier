@@ -1,5 +1,6 @@
 package com.CTPrice_Notifier.Controller;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@GetMapping("/getCustomerByEmail")
-	public Customer getCustomerByEmail(@RequestParam("email") String email) throws RuntimeException, InterruptedException, ExecutionException {
+	public CompletableFuture<Customer> getCustomerByEmail(@RequestParam("email") String email)  {
 		return customerService.getCustomerByEmail(email);
 	}
 }

@@ -2,9 +2,9 @@ package com.CTPrice_Notifier.Dao;
 
 import java.util.concurrent.CompletableFuture;
 
-import com.commercetools.api.models.customer.CustomerPagedQueryResponse;
+import com.commercetools.api.models.customer.Customer;
 
 public interface CustomerDao {
 
-	CompletableFuture<CustomerPagedQueryResponse> getCustomerByEmail(String email);
+	CompletableFuture<Customer> getCustomerByEmail(String email);
 }

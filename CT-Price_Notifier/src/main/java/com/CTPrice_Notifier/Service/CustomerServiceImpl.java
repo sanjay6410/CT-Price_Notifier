@@ -1,6 +1,6 @@
 package com.CTPrice_Notifier.Service;
 
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +14,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerDao customerDao;
 	
-	public Customer getCustomerByEmail(String email) throws RuntimeException, InterruptedException, ExecutionException {
-		return customerDao.getCustomerByEmail(email).get().getResults()
-	            .stream()
-	            .findFirst()
-	            .orElseThrow(() -> new RuntimeException("Customer not found for email: " + email));
+	public CompletableFuture<Customer> getCustomerByEmail(String email)  {
+		return customerDao.getCustomerByEmail(email);
 	}
 }
