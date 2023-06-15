@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.CTPrice_Notifier.Dao.CustomerDao;
+import com.CTPrice_Notifier.Model.CustomerModelSignUp;
 import com.commercetools.api.models.customer.Customer;
 
 @Service
@@ -16,5 +17,9 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	public CompletableFuture<Customer> getCustomerByEmail(String email)  {
 		return customerDao.getCustomerByEmail(email);
+	}
+	
+	public String customerSignUp(CustomerModelSignUp customerModelSignUp) {
+		return customerDao.customerSignUp(customerModelSignUp);
 	}
 }
