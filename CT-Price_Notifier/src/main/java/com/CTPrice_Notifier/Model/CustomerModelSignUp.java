@@ -5,14 +5,14 @@ public class CustomerModelSignUp {
 	private String email;
 	private String password;
 	private String firstName;
-	private String lasName;
+	private String lastName;
 	private String mobileNumber;
-	public CustomerModelSignUp(String email, String password, String firstName, String lasName, String mobileNumber) {
+	public CustomerModelSignUp(String email, String password, String firstName, String lastName, String mobileNumber) {
 		super();
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
-		this.lasName = lasName;
+		this.lastName = lastName;
 		this.mobileNumber = mobileNumber;
 	}
 	public CustomerModelSignUp() {
@@ -37,11 +37,11 @@ public class CustomerModelSignUp {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	public String getLasName() {
-		return lasName;
+	public String getLastName() {
+		return lastName;
 	}
-	public void setLasName(String lasName) {
-		this.lasName = lasName;
+	public void setLasName(String lastName) {
+		this.lastName = lastName;
 	}
 	public String getMobileNumber() {
 		return mobileNumber;
