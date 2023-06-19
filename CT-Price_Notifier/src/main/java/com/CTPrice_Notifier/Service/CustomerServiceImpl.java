@@ -34,6 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private ProjectApiConfig apiConfig;
 	
+	@Override
 	public CompletableFuture<Customer> getCustomerByEmail(String email)  {
 		return customerDao.getCustomerByEmail(email);
 	}
