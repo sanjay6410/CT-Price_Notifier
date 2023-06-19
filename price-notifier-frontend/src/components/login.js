@@ -25,6 +25,7 @@ class Login extends React.Component {
         if (response.status === 200) {
           const customerId = response.data; // Get the customer ID from the response data
           console.log(customerId);
+          localStorage.setItem("customerId",customerId);
           
           console.log(response.status);
           this.setState({

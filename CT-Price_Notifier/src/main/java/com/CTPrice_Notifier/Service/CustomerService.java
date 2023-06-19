@@ -14,6 +14,8 @@ public interface CustomerService {
 
 	CompletableFuture<Customer> getCustomerByEmail(String email) ;
 	
+	Customer getCustomerById(String custId);
+		
 	String  customerSignUp(CustomerModelSignUp customerModelSignUp);
 	
 	String  customerChangePassword(String email,String newPassword,String currentPassword) throws InterruptedException, ExecutionException;

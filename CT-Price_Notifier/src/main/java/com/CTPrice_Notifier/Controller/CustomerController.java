@@ -31,6 +31,16 @@ public class CustomerController {
 		return customerService.getCustomerByEmail(email);
 	}
 	
+	@GetMapping("/getCustomerById")
+	public ResponseEntity<?> getCustomerById(@RequestParam("custId") String custId){
+		try {
+		return ResponseEntity.ok(customerService.getCustomerById(custId));
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Not Found "+e.getMessage());
+		}
+	}
+	
+	
 	@PostMapping("/customerSignUp")
 	public ResponseEntity<?> customerSignUp(@RequestBody CustomerModelSignUp customerModelSignUp){
 		try {

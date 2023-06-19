@@ -10,4 +10,7 @@ public interface CustomerDao {
 	CompletableFuture<Customer> getCustomerByEmail(String email);
 	
 	String customerSignUp(CustomerModelSignUp customerSignUp);
+	
+	Customer getCustomerById(String custId);
+	
 }

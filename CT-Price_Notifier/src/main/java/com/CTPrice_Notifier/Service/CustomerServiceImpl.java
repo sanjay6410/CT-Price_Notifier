@@ -38,9 +38,14 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerDao.getCustomerByEmail(email);
 	}
 	
+	public Customer getCustomerById(String custId) {
+		return customerDao.getCustomerById(custId);
+	}
+	
 	public String customerSignUp(CustomerModelSignUp customerModelSignUp) {
 		return customerDao.customerSignUp(customerModelSignUp);
 	}
+	
 	
 	public String  customerChangePassword(String email,String newPassword,String oldPassword) throws InterruptedException, ExecutionException {
 		CompletableFuture<Customer> customerCompletableFuture=customerDao.getCustomerByEmail(email);

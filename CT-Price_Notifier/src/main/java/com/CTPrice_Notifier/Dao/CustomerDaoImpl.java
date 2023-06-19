@@ -31,6 +31,10 @@ public class CustomerDaoImpl implements CustomerDao {
 				});
 	}
 	
+	public Customer getCustomerById(String custId) {
+		return apiConfig.createApiClient().customers().withId(custId).get().executeBlocking().getBody();
+	}
+	
 	public String customerSignUp(CustomerModelSignUp customerSignUp){
 		
 		TypeResourceIdentifier resourceIdentifier=TypeResourceIdentifierBuilder.of()
