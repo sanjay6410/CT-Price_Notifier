@@ -78,7 +78,7 @@ function EditProfile() {
 
   const handleAddAddress = (event) => {
     event.preventDefault();
-    alert(formatDate(selectedDate));
+    // alert(formatDate(selectedDate));
     setShowAddressForm(true);
   };
 
@@ -156,10 +156,6 @@ function EditProfile() {
       </form>
       {showAddressForm && (
         <form onSubmit={handleSubmit}>
-          <label>
-            Country:
-            <input type="text" name="country" value={formData.country} onChange={handleAddressChange} />
-          </label>
           <label>
           Country:
           <input type="text" name="country" value={formData.country} onChange={handleAddressChange} />

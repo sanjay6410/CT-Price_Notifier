@@ -56,7 +56,7 @@ function CustomerChangePassword() {
 
   return (
     <div>
-      <h1>Customer Reset Password</h1>
+      <h1>Customer Change Password</h1>
       <form onSubmit={handleSubmit} onReset={handleReset}>
         <label>
           Email:{" "}
