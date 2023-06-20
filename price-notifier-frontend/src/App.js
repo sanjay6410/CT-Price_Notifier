@@ -8,6 +8,10 @@ import CustomerChangePassword from './components/CustomerChangePassword';
 import EditProfile from './components/CustomerUpdateInfo';
 import { BrowserRouter,Route,Routes, } from "react-router-dom"
 import DefaultPage from './components/DefaultHomePage';
+import CreateShoppingList from './components/ShoppingList';
+import ShowShoppingList from './components/ShowShoppingList';
+
+
 import ProductList from './components/productlist';
 import Variants from './components/variants';
 function App() {
@@ -21,6 +25,8 @@ function App() {
     <Route path='/resetPassword' element={<CustomerResetPassword/>} />
     <Route path='/changePassword' element={<CustomerChangePassword />} />
     <Route path='/updateCustomerInfo' element={<EditProfile/>} />
+    <Route path='/createShoppingList' element={<CreateShoppingList/>} />
+    <Route path='/showShoppingList' element={<ShowShoppingList/>} />
     <Route path='/' element={<DefaultPage/>}></Route>
      <Route path='/addProducts/:id' element={<AddProduct/>}/> 
      <Route path='/listProducts' element={<ProductList/>}/>

@@ -23,11 +23,19 @@ public class ShoppingListsDaoImpl implements ShoppingListsDao {
 	}
 	@Override
 	public ShoppingList getShoppingListByCustomerId(String customerId) {
-		List<ShoppingList> customerShoppingLists=  apiConfig.createApiClient().shoppingLists().get().withWhere("customer(id=\"" + customerId + "\")").executeBlocking().getBody().getResults();
-		Optional<ShoppingList> customerShoppingListOptional=Optional.ofNullable(customerShoppingLists.get(0));
+	    List<ShoppingList> customerShoppingLists = apiConfig.createApiClient().shoppingLists()
+	            .get().withWhere("customer(id=\"" + customerId + "\")")
+	            .executeBlocking().getBody().getResults();
+
+	    if (customerShoppingLists.isEmpty()) {
+	        throw new RuntimeException("Shopping list not found");
+	    }
+
+	    Optional<ShoppingList> customerShoppingListOptional=Optional.ofNullable(customerShoppingLists.get(0));
 		ShoppingList shoppingList=customerShoppingListOptional.orElseThrow(() -> new RuntimeException("Shopping list not found"));
-		return shoppingList;
+	    return shoppingList;
 	}
+
 	
 	
 }
