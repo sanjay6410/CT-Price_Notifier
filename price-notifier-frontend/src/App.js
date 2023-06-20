@@ -9,6 +9,7 @@ import EditProfile from './components/CustomerUpdateInfo';
 import { BrowserRouter,Route,Routes, } from "react-router-dom"
 import DefaultPage from './components/DefaultHomePage';
 import ProductList from './components/productlist';
+import Variants from './components/variants';
 function App() {
 
   return (
@@ -23,6 +24,8 @@ function App() {
     <Route path='/' element={<DefaultPage/>}></Route>
      <Route path='/addProducts/:id' element={<AddProduct/>}/> 
      <Route path='/listProducts' element={<ProductList/>}/>
+ 
+     <Route path='/product/:id' element={<Variants/>}/>
     </Routes>
      </BrowserRouter>
      </div>

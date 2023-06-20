@@ -15,6 +15,9 @@ import com.commercetools.api.models.common.LocalizedString;
 import com.commercetools.api.models.product.Product;
 import com.commercetools.api.models.product.ProductDraft;
 import com.commercetools.api.models.product.ProductDraftBuilder;
+import com.commercetools.api.models.product.ProductPagedQueryResponse;
+import com.commercetools.api.models.product.ProductProjectionPagedQueryResponse;
+import com.commercetools.api.models.product.ProductVariant;
 import com.commercetools.api.models.product.ProductVariantDraft;
 import com.commercetools.api.models.product.ProductVariantDraftBuilder;
 import com.commercetools.api.models.product_type.ProductTypePagedQueryResponse;
@@ -31,12 +34,13 @@ public class ProductServiceImpl implements ProductService {
 	private ProjectApiConfig apiConfig;
 
 	@Override
-	public ResponseEntity<Product> AddProduct(ProductModel product) {
+	public ResponseEntity<Product> addProduct(ProductModel product) {
 		ProjectApiRoot par = apiConfig.createApiClient();
 		ProductTypeResourceIdentifier identifier = ProductTypeResourceIdentifierBuilder.of()
 				.id(product.getProductType().getId()).build();
 
-		ProductVariantDraft productVariantDraft = ProductVariantDraftBuilder.of().sku(product.getSku())
+		ProductVariantDraft productVariantDraft = ProductVariantDraftBuilder.of()
+				.sku(product.getSku())
 				.key(product.getVariantKey())
 				// .prices(priceDraft)
 				.build();
@@ -71,4 +75,26 @@ public class ProductServiceImpl implements ProductService {
                 .join();
 	    
 	}
+
+	@Override
+	public List<ProductVariant> getVariants(String id) {
+		ProjectApiRoot par=apiConfig.createApiClient();
+		return par.products().withId(id).get().execute()
+				.thenApply(res->res.getBody().getMasterData().getCurrent().getAllVariants())
+				.join();
+	}
+
+	@Override
+	public List<Product> getAllProductsBySku(String sku) {
+		ProjectApiRoot par=apiConfig.createApiClient();
+		 List<Product> products = par.products()
+                 .get()
+                 .withWhere("masterData(current(masterVariant(sku=:sku)))")
+                 .withPredicateVar("sku", sku)
+                 .executeBlocking()
+                 .getBody()
+                 .getResults();
+		 return products;
+	}
+
 }
