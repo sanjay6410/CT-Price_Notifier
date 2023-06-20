@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Button, Form, Table } from "react-bootstrap";
-
+import "./css/productlist.css";
 const TableRow = ({ product }) => {
   const handleClick = () => {
     // Redirect to another page
@@ -87,7 +87,7 @@ class ProductList extends React.Component {
           value={this.state.search}
           onChange={this.handleInputChange}
         />
-        <Button variant="primary" align="right" onClick={this.handleSearch}>
+        <Button className="button" variant="primary" align="right" onClick={this.handleSearch}>
           Search
         </Button>
         <div className="message">
@@ -96,7 +96,7 @@ class ProductList extends React.Component {
            <div className="error">{this.state.errorMsg}</div>
          )}
          </div>
-        <Table bordered>
+        <Table className="table">
           <thead>
             <tr>
               <th>Product Name</th>
