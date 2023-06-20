@@ -11,6 +11,9 @@ import DefaultPage from './components/DefaultHomePage';
 import CreateShoppingList from './components/ShoppingList';
 import ShowShoppingList from './components/ShowShoppingList';
 
+
+import ProductList from './components/productlist';
+import Variants from './components/variants';
 function App() {
 
   return (
@@ -26,6 +29,9 @@ function App() {
     <Route path='/showShoppingList' element={<ShowShoppingList/>} />
     <Route path='/' element={<DefaultPage/>}></Route>
      <Route path='/addProducts/:id' element={<AddProduct/>}/> 
+     <Route path='/listProducts' element={<ProductList/>}/>
+ 
+     <Route path='/product/:id' element={<Variants/>}/>
     </Routes>
      </BrowserRouter>
      </div>

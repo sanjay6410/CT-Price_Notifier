@@ -14,7 +14,9 @@ class AddProduct extends React.Component {
       productSlug: "",
       productKey: "",
       sku: "",
-      variant: ""
+      variant: "",
+      successMsg: "",
+      errorMsg: "",
     };
   }
 
@@ -89,9 +91,17 @@ class AddProduct extends React.Component {
       .post("http://localhost:8080/addproduct", payload)
       .then((response) => {
         console.log(response.data.id);
+        this.setState({
+            successMsg: "Product added successful",
+            errorMsg: "",
+          });
       })
       .catch((error) => {
         console.error(error);
+        this.setState({
+            successMsg: "",
+            errorMsg: "Product is not added provide crct details ",
+          });
       });
   };
 
@@ -188,7 +198,16 @@ class AddProduct extends React.Component {
             <Button variant="primary" onClick={this.handleAddProduct}>
               Add Product
             </Button>
+            <div className="message">
+            {this.state.successMsg && (
+              <div className="success">{this.state.successMsg}</div>
+            )}
+            {this.state.errorMsg && (
+              <div className="error">{this.state.errorMsg}</div>
+            )}
+            </div>
           </div>
+          
         )}
       </Form>
     );
