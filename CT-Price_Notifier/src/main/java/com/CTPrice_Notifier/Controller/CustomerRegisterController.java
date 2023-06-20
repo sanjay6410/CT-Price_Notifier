@@ -13,7 +13,6 @@ import com.commercetools.api.models.customer.Customer;
 import com.commercetools.api.models.customer.CustomerSignInResult;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 public class CustomerRegisterController {
 
 	@Autowired

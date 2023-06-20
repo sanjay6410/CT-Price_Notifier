@@ -1,5 +1,6 @@
 package com.CTPrice_Notifier.Controller;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
@@ -9,20 +10,34 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.CTPrice_Notifier.Config.ProjectApiConfig;
 import com.CTPrice_Notifier.Model.ProductModel;
+import com.CTPrice_Notifier.Model.ShoppingListModel;
+import com.CTPrice_Notifier.Service.ProductService;
 import com.commercetools.api.client.ProjectApiRoot;
 import com.commercetools.api.models.common.LocalizedString;
+import com.commercetools.api.models.customer.CustomerResourceIdentifier;
+import com.commercetools.api.models.customer.CustomerResourceIdentifierBuilder;
+import com.commercetools.api.models.me.MyShoppingListAddLineItemAction;
+import com.commercetools.api.models.me.MyShoppingListAddLineItemActionBuilder;
 import com.commercetools.api.models.product.Product;
 import com.commercetools.api.models.product.ProductDraft;
 import com.commercetools.api.models.product.ProductDraftBuilder;
+import com.commercetools.api.models.product.ProductPagedQueryResponse;
 import com.commercetools.api.models.product.ProductVariantDraft;
 import com.commercetools.api.models.product.ProductVariantDraftBuilder;
+import com.commercetools.api.models.product_selection.ProductsInStorePagedQueryResponse;
 import com.commercetools.api.models.product_type.ProductTypePagedQueryResponse;
 import com.commercetools.api.models.product_type.ProductTypeResourceIdentifier;
 import com.commercetools.api.models.product_type.ProductTypeResourceIdentifierBuilder;
+import com.commercetools.api.models.shopping_list.ShoppingList;
+import com.commercetools.api.models.shopping_list.ShoppingListDraft;
+import com.commercetools.api.models.shopping_list.ShoppingListDraftBuilder;
+import com.commercetools.api.models.shopping_list.ShoppingListUpdate;
+import com.commercetools.api.models.shopping_list.ShoppingListUpdateActionBuilder;
 
 import io.vrap.rmf.base.client.ApiHttpException;
 import io.vrap.rmf.base.client.ApiHttpResponse;
@@ -31,49 +46,30 @@ import io.vrap.rmf.base.client.ApiHttpResponse;
 @RestController
 public class ProductController {
 	
+	
+	
 	@Autowired
-	private ProjectApiConfig apiConfig;
+	private ProductService productService;
 	
 	@PostMapping("/addproduct")
-	public ResponseEntity<Product> getProduct(@RequestBody ProductModel product) {
-	    ProjectApiRoot par = apiConfig.createApiClient();
-
-	    ProductTypeResourceIdentifier identifier = ProductTypeResourceIdentifierBuilder.of()
-	            .id(product.getProductType().getId())
-	            .build();
-
-	    ProductVariantDraft productVariantDraft = ProductVariantDraftBuilder.of()
-	            .sku(product.getSku())
-	            .key(product.getVariantKey())
-	            // .prices(priceDraft)
-	            .build();
-
-	    LocalizedString description = LocalizedString.of(Locale.ENGLISH, product.getDescription());
-	    LocalizedString name = LocalizedString.of(Locale.ENGLISH, product.getName());
-	    LocalizedString slug = LocalizedString.of(Locale.ENGLISH, product.getSlug());
-
-	    ProductDraft productDraft = ProductDraftBuilder.of()
-	            .productType(identifier)
-	            .description(description)
-	            .name(name)
-	            .slug(slug)
-	            .masterVariant(productVariantDraft)
-	            .build();
-
-	    try {
-	        Product createdProduct = par.products().post(productDraft).executeBlocking().getBody();
-	        return ResponseEntity.ok(createdProduct);
-	    } catch (ApiHttpException exception) {
-	        // Handle the exception and construct an appropriate error response
-	        return ResponseEntity.status(exception.getStatusCode()).body(null);
-	    }
+	public ResponseEntity<Product> AddProduct(@RequestBody ProductModel product) {
+	  
+	    return productService.AddProduct(product);
+	    
+	    
 	}
 
 	
 	@GetMapping("/selectProductTypes")
 	public CompletableFuture<ApiHttpResponse<ProductTypePagedQueryResponse>> selectProductTypes() {
-		ProjectApiRoot par=apiConfig.createApiClient();
-		return par.productTypes().get().execute();
+		return productService.selectProductTypes();
+		
 	}
-
+	
+	@GetMapping("/listProducts")
+	public List<Product> getAllProducts(){
+		return productService.getAllProducts();
+		
+	}
+	
 }
