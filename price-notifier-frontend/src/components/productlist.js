@@ -25,6 +25,7 @@ class ProductList extends React.Component {
     this.state = {
       products: [],
       search: "",
+      errorMsg: "",
     };
   }
 
@@ -41,6 +42,8 @@ class ProductList extends React.Component {
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
+        
+       
       });
   };
 
@@ -55,6 +58,11 @@ class ProductList extends React.Component {
         const data = response.data;
         console.log(data)
         this.setState({ products: data });
+        if(data.length===0){
+            this.setState({
+                errorMsg: "Variant id is invalid ",
+              });
+        }
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
@@ -82,6 +90,12 @@ class ProductList extends React.Component {
         <Button variant="primary" align="right" onClick={this.handleSearch}>
           Search
         </Button>
+        <div className="message">
+         
+         {this.state.errorMsg && (
+           <div className="error">{this.state.errorMsg}</div>
+         )}
+         </div>
         <Table bordered>
           <thead>
             <tr>
@@ -97,6 +111,7 @@ class ProductList extends React.Component {
               <TableRow key={product.id} product={product} />
             ))}
           </tbody>
+        
         </Table>
       </Form>
     );

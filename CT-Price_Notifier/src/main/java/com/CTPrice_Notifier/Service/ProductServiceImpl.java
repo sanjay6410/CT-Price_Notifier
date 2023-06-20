@@ -86,15 +86,15 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getAllProductsBySku(String sku) {
-		ProjectApiRoot par=apiConfig.createApiClient();
-		 List<Product> products = par.products()
-                 .get()
-                 .withWhere("masterData(current(masterVariant(sku=:sku)))")
-                 .withPredicateVar("sku", sku)
-                 .executeBlocking()
-                 .getBody()
-                 .getResults();
-		 return products;
+	    ProjectApiRoot par = apiConfig.createApiClient();
+	    List<Product> products = par.products()
+	        .get()
+	        .withWhere("masterData(current(masterVariant(sku = :sku)) or current(variants(sku = :sku)))")
+	        .withPredicateVar("sku", sku)
+	        .executeBlocking()
+	        .getBody()
+	        .getResults();
+	    return products;
 	}
 
 }
