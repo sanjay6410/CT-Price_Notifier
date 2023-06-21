@@ -74,7 +74,7 @@ public class ShoppingListsServiceImpl implements ShoppingListsService {
 					.name(t -> t.addValue("en", shoppingListModel.getName()))
 					.description(t -> t.addValue("en", shoppingListModel.getDescription()))
 					.lineItems(shoppingListLineItemDraft).customer(customerResourceIdentifier)
-					.key("my-shopping-list -" + customerId).build();
+					.key("my-shopping-list-" + customerId).build();
 			apiConfig.createApiClient().shoppingLists().post(shoppingListDraft).executeBlocking().getBody();
 			return "Shopping List Added";
 		}
@@ -107,21 +107,21 @@ public class ShoppingListsServiceImpl implements ShoppingListsService {
 		}
 
 		String productId = productData.getId();
-		 Long variantId = null;
-		List<ProductVariant> productVariants=productData.getMasterData().getCurrent().getAllVariants();
-		for(ProductVariant productVariant:productVariants) {
-			if(productVariant.getSku().equals(sku)) {
-				//System.out.println("variants id of input sku   "+productVariant.getId());
-				variantId=productVariant.getId();
+		Long variantId = null;
+		List<ProductVariant> productVariants = productData.getMasterData().getCurrent().getAllVariants();
+		for (ProductVariant productVariant : productVariants) {
+			if (productVariant.getSku().equals(sku)) {
+				// System.out.println("variants id of input sku "+productVariant.getId());
+				variantId = productVariant.getId();
 			}
 		}
 
-		//System.out.println(variantId);
+		// System.out.println(variantId);
 		List<ShoppingListLineItem> customerShoppingListLineItems = customerShoppingList.getLineItems();
 		boolean productExists = false;
 
 		for (ShoppingListLineItem lineItem : customerShoppingListLineItems) {
-			if (lineItem.getProductId().equals(productId) && lineItem.getVariantId()==variantId) {
+			if (lineItem.getProductId().equals(productId) && lineItem.getVariantId() == variantId) {
 				statuses.add("Product Already Exists");
 				productExists = true;
 				break;
@@ -162,20 +162,31 @@ public class ShoppingListsServiceImpl implements ShoppingListsService {
 	}
 
 	@Override
-	public String updateShoppingListChangePercentageNumber(String customerId, int percentageNumber) {
-		ShoppingList customerShoppingList = shoppingListsDao.getShoppingListByCustomerId(customerId);
-		TypeResourceIdentifier typeResourceIdentifier = TypeResourceIdentifierBuilder.of().key("Percentage-Number")
-				.build();
+	public String updateShoppingListChangePercentageNumber(String customerId, String lineItemId, int percentageNumber) {
 
-		CustomFieldsDraft customFieldsDraft = CustomFieldsDraftBuilder.of().type(typeResourceIdentifier)
-				.fields(t -> t.addValue("Percentage-Number", percentageNumber)).build();
+		ShoppingList customerShoppingList = shoppingListsDao.getShoppingListByCustomerId(customerId);
 
 		ShoppingListUpdate shoppingListUpdate = ShoppingListUpdateBuilder.of()
-				.version(customerShoppingList.getVersion())
-				.plusActions(t -> t.addLineItemBuilder().custom(customFieldsDraft)).build();
+				.version(customerShoppingList.getVersion()).plusActions(t -> t.setLineItemCustomFieldBuilder()
+						.lineItemId(lineItemId).name("Percentage-Number").value(percentageNumber))
+				.build();  
 
 		apiConfig.createApiClient().shoppingLists().withId(customerShoppingList.getId()).post(shoppingListUpdate)
 				.execute();
 		return "percentage Number Changed Successfully ";
 	}
+	
+	@Override
+	public String customerShoppingListsExists(String customerId) {
+		 List<ShoppingList> customerShoppingLists = apiConfig.createApiClient().shoppingLists()
+		            .get().withWhere("customer(id=\"" + customerId + "\")")
+		            .executeBlocking().getBody().getResults();
+		if(customerShoppingLists.isEmpty()) {
+			return "Not Exists";
+		}else {
+			return "Exists";
+		}
+	}
+
+
 }

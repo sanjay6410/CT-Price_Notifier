@@ -32,7 +32,7 @@ class Login extends React.Component {
             successMsg: "Login successful",
             errorMsg: "",
           });
-          window.location="/addProducts/"+customerId;
+          window.location="/listProducts";
         }
       })
       .catch(error => {
@@ -54,6 +54,14 @@ class Login extends React.Component {
       [event.target.name]: event.target.value
     });
   };
+  handleHomePage=(e)=>{
+    e.preventDefault();
+    window.location.assign("/");
+  }
+  handleResetPassword=(e)=>{
+    e.preventDefault();
+    window.location.assign("/resetPassword");
+  }
 
   render() {
     return (
@@ -87,6 +95,8 @@ class Login extends React.Component {
           </div>
           <div className="login-button">
             <button>Login</button>
+            <button onClick={this.handleHomePage}>Home Page</button>
+            <button onClick={this.handleResetPassword}>Reset Password</button>
           </div>
        
           <div className="message">

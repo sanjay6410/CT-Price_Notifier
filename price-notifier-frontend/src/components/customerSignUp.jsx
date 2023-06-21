@@ -73,7 +73,7 @@ function Registration() {
           setTimeout(() => {
             
             window.location.assign("/login"); 
-          }, 4000);
+          }, 2000);
         } else {
           console.log(response.data);
         }
@@ -103,6 +103,10 @@ function Registration() {
         <p>Redirecting to login page...</p>
       </div>
     );
+  }
+  const handleHomePage=(e)=>{
+    e.preventDefault();
+    window.location.assign("/");
   }
 
   return (
@@ -176,6 +180,7 @@ function Registration() {
       <div className="button-container">
       <button type="submit">Submit</button>
       <button type="reset">Reset</button>
+      <button onClick={handleHomePage}>Home Page</button>
       </div>
     </form>
     </div>

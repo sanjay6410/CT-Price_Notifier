@@ -48,6 +48,9 @@ function CustomerChangePassword() {
       .post("http://localhost:8080/customerChangePassword", formData)
       .then((response) => {
         console.log(response.data);
+        
+        alert("Password Changed Successfully");
+        window.location.reload();
       })
       .catch((error) => {
         console.error(error);

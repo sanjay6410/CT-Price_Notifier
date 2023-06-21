@@ -20,7 +20,9 @@ public interface ShoppingListsService {
 
 	String updateShoppingListRemoveLineItem(String customerId, String lineItemId);
 
-	String updateShoppingListChangePercentageNumber(String customerId, int percentageNumber);
+	String updateShoppingListChangePercentageNumber(String customerId, String lineItemId, int percentageNumber);
+
+	String customerShoppingListsExists(String customerId);
 
 	
 

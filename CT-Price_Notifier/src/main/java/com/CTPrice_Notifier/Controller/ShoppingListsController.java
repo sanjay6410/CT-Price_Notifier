@@ -60,11 +60,20 @@ public class ShoppingListsController {
 	}
 	
 	@PostMapping("/updateShoppingListChangePercentageNumber")
-	public ResponseEntity<?> updateShoppingListChangePercentageNumber(String customerId,int percentageNumber){
+	public ResponseEntity<?> updateShoppingListChangePercentageNumber(String customerId,String lineItemId,int percentageNumber){
 		try {
-			return ResponseEntity.ok(shoppingListsService.updateShoppingListChangePercentageNumber(customerId, percentageNumber));
+			return ResponseEntity.ok(shoppingListsService.updateShoppingListChangePercentageNumber(customerId,lineItemId, percentageNumber));
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Percentage Number Not Updated");
+		}
+	}
+	
+	@GetMapping("/checkShoppingListExists")
+	public ResponseEntity<?> customerShoppingListsExists(String customerId){
+		try {
+			return ResponseEntity.ok(shoppingListsService.customerShoppingListsExists(customerId));
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Check Shopping Lists For Customer Failed");
 		}
 	}
 	

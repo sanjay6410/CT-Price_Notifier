@@ -1,11 +1,14 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useParams } from 'react-router-dom';
 
 function AddProductToShoppingLists() {
   const [customerId, setCustomerId] = useState(localStorage.getItem("customerId"));
   const [quantity, setQuantity] = useState(null);
   const [percentageNumber, setPercentageNumber] = useState(null);
-
+  const { sku } = useParams();
+  const [successMessage, setSuccessMessage] = useState("");
+  const [redirect, setRedirect] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "quantity") {
@@ -25,12 +28,31 @@ function AddProductToShoppingLists() {
     e.preventDefault();
     axios
       .post(
-        `http://localhost:8080/updateShoppingListAddLineItem?customerId=${customerId}&sku=M0E20000000DQQ8&quantity=${quantity}&percentageNumber=${percentageNumber}`
+        `http://localhost:8080/updateShoppingListAddLineItem?customerId=${customerId}&sku=${sku}&quantity=${quantity}&percentageNumber=${percentageNumber}`
       )
       .then((response) => {
         console.log(response.data);
+        if(response.status === 200){
+          setSuccessMessage(response.data);
+          setRedirect(true);
+          setTimeout(()=>{
+            window.location.assign("/showShoppingList");
+          },2000)
+        }else{
+          console.log(response.data);
+        }
+      }).catch((error)=>{
+        console.error(error);
       });
   };
+  if (redirect) {
+    return (
+      <div>
+        {successMessage && <div>{successMessage}</div>}
+        <p>Redirecting to Shopping List page...</p>
+      </div>
+    );
+  }
 
   return (
     <div>

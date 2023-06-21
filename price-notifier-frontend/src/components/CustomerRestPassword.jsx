@@ -43,6 +43,10 @@ function CustomerResetPassword() {
       .post("http://localhost:8080/customerResetPassword", formData)
       .then((response) => {
         console.log(response.data);
+        if(response.status === 200){
+          alert("Password Reset Successfully");
+          window.location.assign("/login");
+        }
       })
       .catch((error) => {
         console.error(error);

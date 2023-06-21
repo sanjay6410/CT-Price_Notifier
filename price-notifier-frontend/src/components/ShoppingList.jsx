@@ -1,11 +1,14 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import { useParams } from 'react-router-dom';
 function CreateShoppingList(){
 
     const[customerId,setCustomerId]=useState(localStorage.getItem("customerId"));
     //alert(customerId);
-
+    const { sku } = useParams();
+    const [successMessage, setSuccessMessage] = useState("");
+    const [redirect, setRedirect] = useState(false);
     const [shoppingListFormdata, setShoppingListFormData] = useState({
         name: "",
         description: "",
@@ -33,11 +36,30 @@ function CreateShoppingList(){
 
     const handleSubmit=(e)=>{
         e.preventDefault();
-        axios.post("http://localhost:8080/createShoppingLists?custId="+customerId+"&sku=M0E20000000E2Q7",shoppingListFormdata)
+        axios.post("http://localhost:8080/createShoppingLists?custId="+customerId+"&sku="+sku,shoppingListFormdata)
           .then((response)=>{
             console.log(response);
+            if(response.status === 200){
+              setSuccessMessage("Shopping List Created.");
+              setRedirect(true);
+              setTimeout(()=>{
+                window.location.assign("/showShoppingList");
+              },2000)
+            }else{
+              alert("Shopping List Not Created");
+            }
+          }).catch((error)=>{
+            console.log(error);
           })
     };
+    if (redirect) {
+      return (
+        <div>
+          {successMessage && <div>{successMessage}</div>}
+          <p>Redirecting to Shopping List page...</p>
+        </div>
+      );
+    }
     return (
          <div>
             <h1>Create Shopping Lists</h1>

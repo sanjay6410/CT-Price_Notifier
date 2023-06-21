@@ -26,9 +26,9 @@ function App() {
     <Route path='/resetPassword' element={<CustomerResetPassword/>} />
     <Route path='/changePassword' element={<CustomerChangePassword />} />
     <Route path='/updateCustomerInfo' element={<EditProfile/>} />
-    <Route path='/createShoppingList' element={<CreateShoppingList/>} />
+    <Route path='/createShoppingList/:sku' element={<CreateShoppingList/>} />
     <Route path='/showShoppingList' element={<ShowShoppingList/>} />
-    <Route path='/addProductToShoppingLists' element={<AddProductToShoppingLists/>} />
+    <Route path='/addProductToShoppingLists/:sku' element={<AddProductToShoppingLists/>} />
     <Route path='/' element={<DefaultPage/>}></Route>
      <Route path='/addProducts/:id' element={<AddProduct/>}/> 
      <Route path='/listProducts' element={<ProductList/>}/>
