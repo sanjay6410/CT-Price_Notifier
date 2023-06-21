@@ -10,6 +10,7 @@ import { BrowserRouter,Route,Routes, } from "react-router-dom"
 import DefaultPage from './components/DefaultHomePage';
 import CreateShoppingList from './components/ShoppingList';
 import ShowShoppingList from './components/ShowShoppingList';
+import AddProductToShoppingLists from './components/AddProductToShoppingList';
 
 
 import ProductList from './components/productlist';
@@ -27,6 +28,7 @@ function App() {
     <Route path='/updateCustomerInfo' element={<EditProfile/>} />
     <Route path='/createShoppingList' element={<CreateShoppingList/>} />
     <Route path='/showShoppingList' element={<ShowShoppingList/>} />
+    <Route path='/addProductToShoppingLists' element={<AddProductToShoppingLists/>} />
     <Route path='/' element={<DefaultPage/>}></Route>
      <Route path='/addProducts/:id' element={<AddProduct/>}/> 
      <Route path='/listProducts' element={<ProductList/>}/>
