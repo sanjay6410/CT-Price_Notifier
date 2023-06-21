@@ -26,6 +26,7 @@ import com.commercetools.api.models.shopping_list.ShoppingListUpdate;
 import com.commercetools.api.models.shopping_list.ShoppingListUpdateBuilder;
 import com.commercetools.api.models.type.CustomFieldsDraft;
 import com.commercetools.api.models.type.CustomFieldsDraftBuilder;
+import com.commercetools.api.models.type.FieldContainerBuilder;
 import com.commercetools.api.models.type.TypeResourceIdentifier;
 import com.commercetools.api.models.type.TypeResourceIdentifierBuilder;
 
@@ -56,13 +57,17 @@ public class ShoppingListsServiceImpl implements ShoppingListsService {
 				.withWhere("customer(id=\"" + customerId + "\")").executeBlocking().getBody().getResults();
 		System.out.println(customerShopping.isEmpty());
 		if (customerShopping.isEmpty()) {
+			String priceCheckStatus = "Active";
 			TypeResourceIdentifier typeResourceIdentifier = TypeResourceIdentifierBuilder.of().key("Percentage-Number")
 					.build();
-
-			CustomFieldsDraft customFieldsDraft = CustomFieldsDraftBuilder.of().type(typeResourceIdentifier)
-					.fields(t -> t.addValue("Percentage-Number", shoppingListModel.getPercentageNumber()))
-
-					.build();
+			
+				
+			CustomFieldsDraft customFieldsDraft=CustomFieldsDraftBuilder.of()
+				.type(typeResourceIdentifier)
+				.fields(FieldContainerBuilder.of()
+				.addValue("Price-Check-Status", priceCheckStatus)
+				.addValue("Percentage-Number", shoppingListModel.getPercentageNumber()).build())
+				.build();
 
 			ShoppingListLineItemDraft shoppingListLineItemDraft = ShoppingListLineItemDraftBuilder.of().sku(sku)
 					.quantity(shoppingListModel.getQuantity()).custom(customFieldsDraft).build();
@@ -169,24 +174,22 @@ public class ShoppingListsServiceImpl implements ShoppingListsService {
 		ShoppingListUpdate shoppingListUpdate = ShoppingListUpdateBuilder.of()
 				.version(customerShoppingList.getVersion()).plusActions(t -> t.setLineItemCustomFieldBuilder()
 						.lineItemId(lineItemId).name("Percentage-Number").value(percentageNumber))
-				.build();  
+				.build();
 
 		apiConfig.createApiClient().shoppingLists().withId(customerShoppingList.getId()).post(shoppingListUpdate)
 				.execute();
 		return "percentage Number Changed Successfully ";
 	}
-	
+
 	@Override
 	public String customerShoppingListsExists(String customerId) {
-		 List<ShoppingList> customerShoppingLists = apiConfig.createApiClient().shoppingLists()
-		            .get().withWhere("customer(id=\"" + customerId + "\")")
-		            .executeBlocking().getBody().getResults();
-		if(customerShoppingLists.isEmpty()) {
+		List<ShoppingList> customerShoppingLists = apiConfig.createApiClient().shoppingLists().get()
+				.withWhere("customer(id=\"" + customerId + "\")").executeBlocking().getBody().getResults();
+		if (customerShoppingLists.isEmpty()) {
 			return "Not Exists";
-		}else {
+		} else {
 			return "Exists";
 		}
 	}
-
 
 }
