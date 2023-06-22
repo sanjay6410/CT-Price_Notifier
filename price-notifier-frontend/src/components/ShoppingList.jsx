@@ -2,6 +2,8 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useParams } from 'react-router-dom';
+import NavBar from "./NavBar";
+import './css/ShoppingList.css'
 function CreateShoppingList(){
 
     const[customerId,setCustomerId]=useState(localStorage.getItem("customerId"));
@@ -61,29 +63,37 @@ function CreateShoppingList(){
       );
     }
     return (
-         <div>
-            <h1>Create Shopping Lists</h1>
-            <form onSubmit={handleSubmit} onReset={handleReset}>
-              <label>
+      <div>
+        <NavBar />
+         <div className="ShoppingListMainDiv">
+            <h1 className="headingH1ShoppingList">Create Shopping Lists</h1>
+            <form onSubmit={handleSubmit} onReset={handleReset} className="ShoppingListForm">
+              <label className="ShoppingListFormLabel">
                 Name Of the Shopping list :
-                &nbsp;<input type='text' name="name" onChange={handleChange} value={shoppingListFormdata.name}/>
+                &nbsp;<input type='text' name="name" onChange={handleChange} value={shoppingListFormdata.name} className="ShoppingListFormInput" />
               </label>
-              <label>
+              <br />
+              <label className="ShoppingListFormLabel">
                 Description :
-                &nbsp;<input type='text' name="description" onChange={handleChange} value={shoppingListFormdata.description}/>
+                &nbsp;<input type='text' name="description" onChange={handleChange} value={shoppingListFormdata.description} className="ShoppingListFormInput"/>
               </label>
-              <label>
+              <br />
+              <label className="ShoppingListFormLabel">
                 Quantity:
-                &nbsp;<input type='number' name="quantity" onChange={handleChange} value={shoppingListFormdata.quantity}/>
+                &nbsp;<input type='number' name="quantity" onChange={handleChange} value={shoppingListFormdata.quantity} className="ShoppingListFormInput"/>
               </label>
-              <label>
+              <br />
+              <label className="ShoppingListFormLabel">
                 Preferred Discount Percentage:
-                &nbsp;<input type='number' name="percentageNumber" onChange={handleChange} value={shoppingListFormdata.percentageNumber}/>
+                &nbsp;<input type='number' name="percentageNumber" onChange={handleChange} value={shoppingListFormdata.percentageNumber} className="ShoppingListFormInput"/>
               </label>
-              <button type="submit">Create Shopping List</button>
-              <button type="reset">Reset</button>
+              <br/>
+              <button type="submit" className="ShoppingListbtns btn btn-success">Create Shopping List</button>
+              <br />
+              <button type="reset" className="ShoppingListResetbtn btn btn-success">Reset</button>
 
             </form>
+         </div>
          </div>
     );
 };

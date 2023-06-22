@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Form, Table } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import NavBar from "./NavBar";
+import './css/Variants.css'
 
 function withParams(Component) {
   return (props) => {
@@ -45,6 +47,9 @@ function Variants(props) {
     return symbol + (centAmount / 100).toFixed(2);
   };
   return (
+    <div className="VariantsDivMain">
+      <NavBar/>
+   
     <Form>
       <h1>List Variants</h1>
       <Table bordered>
@@ -54,7 +59,6 @@ function Variants(props) {
             <th>SKU</th>
             <th>Key</th>
             <th>Cent Amount</th>
-            <th>Pricing From</th>
           </tr>
         </thead>
         <tbody>
@@ -86,6 +90,7 @@ function Variants(props) {
         </tbody>
       </Table>
     </Form>
+    </div>
   );
 }
 

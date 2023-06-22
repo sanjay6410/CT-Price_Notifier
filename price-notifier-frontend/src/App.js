@@ -11,6 +11,7 @@ import DefaultPage from './components/DefaultHomePage';
 import CreateShoppingList from './components/ShoppingList';
 import ShowShoppingList from './components/ShowShoppingList';
 import AddProductToShoppingLists from './components/AddProductToShoppingList';
+import NavBar from './components/NavBar';
 
 
 import ProductList from './components/productlist';
@@ -32,6 +33,7 @@ function App() {
     <Route path='/' element={<DefaultPage/>}></Route>
      <Route path='/addProducts/:id' element={<AddProduct/>}/> 
      <Route path='/listProducts' element={<ProductList/>}/>
+     <Route path='/navbar' element={<NavBar/>}/>
  
      <Route path='/product/:id' element={<Variants/>}/>
     </Routes>

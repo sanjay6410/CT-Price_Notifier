@@ -1,0 +1,20 @@
+.addProductDiv{
+    margin-left: 36%;
+}
+.addProductToSLForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -65%;
+    
+}
+.addProductToSLFormField{
+    margin-bottom: 10px;
+}
+.addProductToSLFormLabel{
+    display: inline-block;
+    width: 200px;
+}
+.addProductToSLFormInput{
+    width: 200px;
+}

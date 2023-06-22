@@ -1,0 +1,19 @@
+.LoginMainDiv{
+    margin-top: 200px;
+    margin-left: -4%;
+}
+.LoginHeadingH1{
+    margin-bottom: 50px;
+}
+.LoginInputBtnDiv{
+    padding-bottom: 30px;
+}
+.loginbtn{
+    width: 160px;
+}
+.resetPasswordBtn{
+    width: 160px;
+}
+.homePageBtn{
+    width: 160px;
+}

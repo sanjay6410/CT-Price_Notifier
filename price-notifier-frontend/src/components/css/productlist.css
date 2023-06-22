@@ -21,3 +21,17 @@
     border: 1px solid;
     align-content: center;
   }
+
+  .ProductListHeadingH1{
+    margin-left: 42%;
+  }
+  .ProductListInput{
+    margin-left: 1%;
+    margin-bottom: 20px;
+  }
+  .ProductListButton{
+    margin-left: 48%;
+  }
+  .ProductListLabel{
+    margin-left: 40%;
+  }

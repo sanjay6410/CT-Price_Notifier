@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Button, Form, Table } from "react-bootstrap";
 import "./css/productlist.css";
+import NavBar from "./NavBar";
 const TableRow = ({ product }) => {
   const handleClick = () => {
     // Redirect to another page
@@ -78,17 +79,21 @@ class ProductList extends React.Component {
     const { products, errorMsg} = this.state;
 
     return (
+      <div>
+        <NavBar />
+      
       <Form>
-        <h1>List products</h1>
-        <label htmlFor="search">Search By Sku</label>
+        <h1 className="ProductListHeadingH1">List products</h1>
+        <label htmlFor="search" className="ProductListLabel">Search By Sku</label>
         <input
           type="text"
           id="search"
           value={this.state.search}
           onChange={this.handleInputChange}
+          className="ProductListInput"
         />
         <br/>
-        <Button className="button" variant="primary" align="right" onClick={this.handleSearch}>
+        <Button className="button ProductListButton" variant="primary" align="right" onClick={this.handleSearch}>
           Search
         </Button>
         <br/>
@@ -114,6 +119,7 @@ class ProductList extends React.Component {
         </Table>
       )}
       </Form>
+      </div>
     );
   }
 }
