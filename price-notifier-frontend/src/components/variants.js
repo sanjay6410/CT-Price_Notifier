@@ -13,7 +13,6 @@ function withParams(Component) {
 function Variants(props) {
   const { id } = props.params;
   const [variants, setVariants] = useState([]);
-  const [minPrice, setMinPrice] = useState(null);
 
   useEffect(() => {
     axios
@@ -21,23 +20,11 @@ function Variants(props) {
       .then((response) => {
         const data = response.data;
         setVariants(data);
-        calculateMinPrice(data);
       })
       .catch((error) => {
         console.error("Error fetching variants:", error);
       });
   }, [id]);
-
-  const calculateMinPrice = (variants) => {
-    if (variants.length > 0) {
-      const minPrice = variants.reduce((min, variant) => {
-        const centAmount = variant.prices[0].value.centAmount;
-        return centAmount < min ? centAmount : min;
-      }, Infinity);
-
-      setMinPrice((minPrice / 100).toFixed(2));
-    }
-  };
 
   const handleAddShoppingList = (sku) => {
     const customerId = window.localStorage.getItem("customerId");
@@ -53,7 +40,10 @@ function Variants(props) {
         }
       });
   };
-
+  const formatCentAmount = (centAmount, currencyCode) => {
+    const symbol = currencyCode === "EUR" ? "€" : "US$";
+    return symbol + (centAmount / 100).toFixed(2);
+  };
   return (
     <Form>
       <h1>List Variants</h1>
@@ -63,27 +53,36 @@ function Variants(props) {
             <th>Variant Id</th>
             <th>SKU</th>
             <th>Key</th>
+            <th>Cent Amount</th>
             <th>Pricing From</th>
           </tr>
         </thead>
         <tbody>
-          {variants.map((variant) => (
-            <tr key={variant.id}>
-              <td>{variant.id}</td>
-              <td>{variant.sku}</td>
-              <td>{variant.key}</td>
-              <td>{minPrice}</td>
-              <td>
-                <Button
-                  variant="primary"
-                  align="right"
-                  onClick={() => handleAddShoppingList(variant.sku)}
-                >
-                  Add To Shopping List
-                </Button>
-              </td>
-            </tr>
-          ))}
+        {variants.map((variant) => {
+            const price = variant.prices.length > 0 ? variant.prices[0] : null;
+            const centAmount = price ? price.value.centAmount : null;
+            const currencyCode = price ? price.value.currencyCode : null;
+            const formattedPrice = centAmount
+              ? formatCentAmount(centAmount, currencyCode)
+              : null;
+            return (
+              <tr key={variant.id}>
+                <td>{variant.id}</td>
+                <td>{variant.sku}</td>
+                <td>{variant.key}</td>
+                <td>{formattedPrice}</td>
+                <td>
+                  <Button
+                    variant="primary"
+                    align="right"
+                    onClick={() => handleAddShoppingList(variant.sku)}
+                  >
+                    Add To Shopping List
+                  </Button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     </Form>

@@ -57,7 +57,7 @@ class ProductList extends React.Component {
       .then((response) => {
         const data = response.data;
         console.log(data)
-        this.setState({ products: data });
+        this.setState({ products: data, errorMsg: "" });
         if(data.length===0){
             this.setState({
                 errorMsg: "Variant id is invalid ",
@@ -75,7 +75,7 @@ class ProductList extends React.Component {
   };
 
   render() {
-    const { products } = this.state;
+    const { products, errorMsg} = this.state;
 
     return (
       <Form>
@@ -87,15 +87,14 @@ class ProductList extends React.Component {
           value={this.state.search}
           onChange={this.handleInputChange}
         />
+        <br/>
         <Button className="button" variant="primary" align="right" onClick={this.handleSearch}>
           Search
         </Button>
-        <div className="message">
-         
-         {this.state.errorMsg && (
-           <div className="error">{this.state.errorMsg}</div>
-         )}
-         </div>
+        <br/>
+        {errorMsg && <div className="error">{errorMsg}</div>}
+      {products.length > 0 && (
+       
         <Table className="table">
           <thead>
             <tr>
@@ -113,6 +112,7 @@ class ProductList extends React.Component {
           </tbody>
         
         </Table>
+      )}
       </Form>
     );
   }
