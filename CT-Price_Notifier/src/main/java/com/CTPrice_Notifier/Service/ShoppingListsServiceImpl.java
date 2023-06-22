@@ -137,8 +137,13 @@ public class ShoppingListsServiceImpl implements ShoppingListsService {
 			TypeResourceIdentifier typeResourceIdentifier = TypeResourceIdentifierBuilder.of().key("Percentage-Number")
 					.build();
 
-			CustomFieldsDraft customFieldsDraft = CustomFieldsDraftBuilder.of().type(typeResourceIdentifier)
-					.fields(t -> t.addValue("Percentage-Number", percentageNumber)).build();
+			CustomFieldsDraft customFieldsDraft = CustomFieldsDraftBuilder.of()
+					.type(typeResourceIdentifier)
+					.fields(FieldContainerBuilder.of()
+							.addValue("Price-Check-Status","Active")
+							.addValue("Percentage-Number", percentageNumber)
+							.build())
+					.build();
 
 			ShoppingListUpdate shoppingListUpdate = ShoppingListUpdateBuilder.of()
 					.version(customerShoppingList.getVersion())
