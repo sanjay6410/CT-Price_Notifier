@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Table } from "react-bootstrap";
+import NavBar from "./NavBar";
+import './css/ShowShoppingList.css'
 
 
 function ShowShoppingList() {
@@ -71,36 +73,43 @@ function ShowShoppingList() {
 
   return (
     <div>
-      <h1>Shopping List</h1>
-      <h3>Name: {ShoppingList?.name?.en}</h3>
-      <p>Description: {ShoppingList?.description?.en}</p>
+      <NavBar />
+    <div className="ShowSLMainDiv">
+      <h1 className="ShowSLHeadingH1">Shopping List</h1>
+      <h4>Name: {ShoppingList?.name?.en}</h4>
+      <h4>Description: {ShoppingList?.description?.en}</h4>
+      <div className="ShowSLProducts">
       {LineItems && LineItems.map((item, index) => (
-        <div key={index}>
-            {/* {item.productId}
-            {item.custom.fields["Percentage-Number"]} */}
-            <Table class="table table-secondary">
+        <div key={index} className="ShowSLTableDiv">
+            <Table class="table-secondary ShowSLTable">
   <tbody>
     <tr>
-      <th>Product Name</th>
-      <td>{item.name.en}</td>
+      <th className="ShowShoppingListTh">Product Name</th>
+      <td className="ShowShoppingListTd">{item.name.en}</td>
     </tr>
     <tr>
-      <th>Quantity</th>
-      <td>{item.quantity}</td>
+      <th className="ShowShoppingListTh">Quantity</th>
+      <td className="ShowShoppingListTd">{item.quantity}</td>
     </tr>
     <tr>
-      <th>Percentage Number</th>
-      <td>{item.custom.fields["Percentage-Number"]}</td>
+      <th className="ShowShoppingListTh">Percentage Number</th>
+      <td className="ShowShoppingListTd">{item.custom.fields["Percentage-Number"]}</td>
     </tr>
   </tbody>
-  <button onClick={(e) => handleRemoveProduct(e, item.id)}>Remove Product</button>
-  <button onClick={(e)=> handleUpdatePercentage(e, item.id)}>Update Preferred Discount Percentage</button>
+  <br />
+  <button onClick={(e) => handleRemoveProduct(e, item.id)} className="btn btn-warning">Remove Product</button>&nbsp;&nbsp;&nbsp;
+  <br />
+  <button onClick={(e)=> handleUpdatePercentage(e, item.id)} className="btn btn-warning">Update Preferred Discount Percentage</button>
+  <br />
+  <hr />
 </Table>
 
 
 
             </div>
       ))}
+      </div>
+    </div>
     </div>
   );
 }

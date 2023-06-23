@@ -1,0 +1,30 @@
+.ShoppingListMainDiv{
+    display: flex;
+    flex-direction: column;
+    margin-left: 40%;
+    
+}
+.ShoppingListForm{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 2%;
+    margin-top: 30px;
+    
+}
+ .ShoppingListFormLabel{
+    display: inline-block;
+    width: 200px;
+}
+.ShoppingListFormInput{
+    width: 200px;
+} 
+.ShoppingListbtns{
+    margin-left: 18px;
+}
+.ShoppingListResetbtn{
+    margin-left: 68px;
+}
+.headingH1ShoppingList{
+    margin-left: -40px;
+}

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import './css/CustomerResetPassword.css';
 
 function CustomerResetPassword() {
   const [formData, setFormData] = useState({
@@ -52,33 +53,47 @@ function CustomerResetPassword() {
         console.error(error);
       });
   };
+  const handleHomeButton=(e)=>{
+    e.preventDefault();
+    window.location.assign("/");
+  }
 
   return (
-    <div>
-      <h1>Customer Reset Password</h1>
-      <form onSubmit={handleSubmit} onReset={handleReset}>
-        <label>
-          Email:{" "}
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          New Password:{" "}
-          <input
-            type="password"
-            name="newPassword"
-            value={formData.newPassword}
-            onChange={handleChange}
-          />
-        </label>
-        {passwordError && <div>{passwordError}</div>}
-        <button type="submit">Reset Password</button>
-        <button type="reset">Reset</button>
-      </form>
+    <div className="resetPasswordDivMain">
+      <h1 className="resetPasswordHeadingH1">Customer Reset Password</h1><br />
+      <form onSubmit={handleSubmit} onReset={handleReset} className="resetPasswordForm">
+  <div className="form-group-resetPassword">
+    <label className="form-label-resetPassword">
+      Email:
+      <input
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        className="form-input-resetPassword"
+      />
+    </label>
+  </div>
+  <div className="form-group-resetPassword">
+    <label className="form-label-resetPassword">
+      New Password:
+      <input
+        type="password"
+        name="newPassword"
+        value={formData.newPassword}
+        onChange={handleChange}
+        className="form-input-resetPassword"
+      />
+    </label>
+  </div>
+  {passwordError && <div>{passwordError}</div>}
+  <br />
+  <button type="submit" className="btn btn-success btn-resetPassword" >Reset Password</button>
+  <br />
+  <button type="reset" className="btn btn-success btn-resetPassword">Reset</button>
+  <br />
+  <button type="button" onClick={handleHomeButton} className="btn btn-success btn-resetPassword">Home Page</button>
+</form>
     </div>
   );
 }

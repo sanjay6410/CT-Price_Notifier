@@ -1,6 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import axios from "axios";
+import './css/login.css'
 
 class Login extends React.Component {
    constructor(props) {
@@ -65,11 +66,12 @@ class Login extends React.Component {
 
   render() {
     return (
+      <div className="LoginMainDiv">
       <Form onSubmit={this.handleSubmit}>
         <center>
         <div>
-          <h1>Login Page</h1>
-          <div>
+          <h1 className="LoginHeadingH1">Login Page</h1>
+          <div className="LoginInputBtnDiv">
             <input
               type="text"
               placeholder="Email"
@@ -81,7 +83,7 @@ class Login extends React.Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className="second-input">
+          <div className="second-input LoginInputBtnDiv">
             <input
               type="password"
               placeholder="Password"
@@ -94,9 +96,9 @@ class Login extends React.Component {
             />
           </div>
           <div className="login-button">
-            <button>Login</button>
-            <button onClick={this.handleHomePage}>Home Page</button>
-            <button onClick={this.handleResetPassword}>Reset Password</button>
+            <button className="btn btn-success loginbtn" >Login</button><br /><br />
+            <button onClick={this.handleHomePage} className="btn btn-success homePageBtn">Home Page</button><br /><br />
+            <button onClick={this.handleResetPassword} className="btn btn-success resetPasswordBtn">Forget Password</button><br /><br />
           </div>
        
           <div className="message">
@@ -110,6 +112,7 @@ class Login extends React.Component {
         </div>
         </center>
       </Form>
+      </div>
     );
   }
 }

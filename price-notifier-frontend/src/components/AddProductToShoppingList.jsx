@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useParams } from 'react-router-dom';
+import './css/AddProductToShoppingLists.css';
+import NavBar from './NavBar';
 
 function AddProductToShoppingLists() {
   const [customerId, setCustomerId] = useState(localStorage.getItem("customerId"));
@@ -9,6 +11,7 @@ function AddProductToShoppingLists() {
   const { sku } = useParams();
   const [successMessage, setSuccessMessage] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [percentageNumberError, setPercentageNumberError]=useState("");
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "quantity") {
@@ -22,10 +25,23 @@ function AddProductToShoppingLists() {
     e.preventDefault();
     setQuantity(null);
     setPercentageNumber(null);
+    setPercentageNumberError(null);
   };
+  
+
+  const validatePercentageNumber=(percentageNumber)=>{
+    const regex = /^(?:[1-9]|[1-9][0-9]|100)?$/;
+    return regex.test(percentageNumber);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if(!validatePercentageNumber(percentageNumber)){
+      setPercentageNumberError("Preffered Percentage Number Should be in Range bettween 1-100");
+      return;
+    }
+
     axios
       .post(
         `http://localhost:8080/updateShoppingListAddLineItem?customerId=${customerId}&sku=${sku}&quantity=${quantity}&percentageNumber=${percentageNumber}`
@@ -56,19 +72,32 @@ function AddProductToShoppingLists() {
 
   return (
     <div>
+      <NavBar />
+    
+    <div className="addProductDiv">
+      
       <h1>Add Product To Shopping List</h1>
-      <form onSubmit={handleSubmit} onReset={handleReset}>
-        <label>
+      <form onSubmit={handleSubmit} onReset={handleReset} className="addProductToSLForm">
+        <div className="addProductToSLFormField">
+        <label className="addProductToSLFormLabel">
           Quantity:
-          <input name="quantity" type="number" value={quantity} onChange={handleChange} />
+          <input name="quantity" type="number" value={quantity} onChange={handleChange} className="addProductToSLFormInput"/>
         </label>
-        <label>
+        </div>
+        <br />
+        <div className="addProductToSLFormField">
+        <label className="addProductToSLFormLabel"> 
           Preferred Discount Percentage:
-          <input name="percentageNumber" type="number" value={percentageNumber} onChange={handleChange} />
+          <input name="percentageNumber" type="number" value={percentageNumber} onChange={handleChange} className="addProductToSLFormInput"/>
         </label>
-        <button type="submit">Add Product</button>
-        <button type="reset">Reset</button>
+        {percentageNumberError && <div>{percentageNumberError}</div>}
+        </div>
+        <br />
+        <button type="submit" className="btn btn-success">Add Product</button>
+        <br />
+        <button type="reset" className="btn btn-success">Reset</button>
       </form>
+    </div>
     </div>
   );
 }

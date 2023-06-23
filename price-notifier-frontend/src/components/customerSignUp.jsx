@@ -111,78 +111,89 @@ function Registration() {
 
   return (
     <div className="registration-container">
-    <form onSubmit={handleSubmit} onReset={handleReset}>
-      <h1 >Customer SignUp</h1>
-      <label>
-        First Name:{" "}
-        <input
-          type="text"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
-      <label>
-        Last Name:{" "}
-        <input
-          type="text"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
-      <label>
-        Email:{" "}
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
-      <label>
-        Password:{" "}
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
-      {passwordError && <div>{passwordError}</div>}
-      <br />
-      <label>
-        Confirm Password:{" "}
-        <input
-          type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
-      <label>
-        Mobile Number:{" "}
-        <input
-          type="text"
-          name="mobileNumber"
-          value={formData.mobileNumber}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
-      {mobileNumberError && <div>{mobileNumberError}</div>}
-      <br />
-      <div className="button-container">
-      <button type="submit">Submit</button>
-      <button type="reset">Reset</button>
-      <button onClick={handleHomePage}>Home Page</button>
-      </div>
-    </form>
+ <form onSubmit={handleSubmit} onReset={handleReset} className="signUpForm">
+  <h1 className="signUpHeadingH1">Customer SignUp</h1>
+  <div className="form-group">
+    <label className="small-label">
+      First Name:
+      <input
+        type="text"
+        name="firstName"
+        value={formData.firstName}
+        onChange={handleChange}
+        className="signUpInput"
+      />
+    </label>
+  </div>
+  <div className="form-group">
+    <label className="big-label">
+      Last Name:
+      <input
+        type="text"
+        name="lastName"
+        value={formData.lastName}
+        onChange={handleChange}
+        className="signUpInput"
+      />
+    </label>
+  </div>
+  <div className="form-group">
+    <label className="small-label">
+      Email:
+      <input
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        className="signUpInput"
+      />
+    </label>
+  </div>
+  <div className="form-group">
+    <label className="big-label">
+      Password:
+      <input
+        type="password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
+        className="signUpInput"
+      />
+    </label>
+  </div>
+  {passwordError && <div>{passwordError}</div>}
+  <div className="form-group">
+    <label className="small-label">
+      Confirm Password:
+      <input
+        type="password"
+        name="confirmPassword"
+        value={formData.confirmPassword}
+        onChange={handleChange}
+        className="signUpInput"
+      />
+    </label>
+  </div>
+  <div className="form-group">
+    <label className="big-label">
+      Mobile Number:
+      <input
+        type="text"
+        name="mobileNumber"
+        value={formData.mobileNumber}
+        onChange={handleChange}
+        className="signUpInput"
+      />
+    </label>
+  </div>
+  {mobileNumberError && <div>{mobileNumberError}</div>}
+  <div className="button-container">
+    <button type="submit" className="btn btn-success">Submit</button>
+    <button type="reset" className="btn btn-success">Reset</button>
+    <button onClick={handleHomePage} className="btn btn-success">Home Page</button>
+  </div>
+</form>
+
     </div>
   );
 }
