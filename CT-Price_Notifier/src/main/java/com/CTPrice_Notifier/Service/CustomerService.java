@@ -1,10 +1,7 @@
 package com.CTPrice_Notifier.Service;
 
-import java.time.LocalDate;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
-import org.springframework.http.ResponseEntity;
 
 import com.CTPrice_Notifier.Model.CustomerModelSignUp;
 import com.commercetools.api.models.common.Address;
@@ -22,6 +19,6 @@ public interface CustomerService {
 	
 	String customerResetPassword(String email,String newPassword);
 	
-	String customerInfoUpdate(String email,LocalDate dob,Address customerAddress) ;
+	String customerInfoUpdate(String email,Address customerAddress) ;
 }
 

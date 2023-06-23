@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
+import NavBar from "./NavBar";
+import './css/CustomerChangePassword.css';
 
 function CustomerChangePassword() {
   const [formData, setFormData] = useState({
@@ -59,9 +61,13 @@ function CustomerChangePassword() {
 
   return (
     <div>
-      <h1>Customer Change Password</h1>
+      <NavBar />
+   
+    <div className="CCPDivMain">
+      
+      <h1>Customer Change Password</h1><br />
       <form onSubmit={handleSubmit} onReset={handleReset}>
-        <label>
+        <label className="emailLabel">
           Email:{" "}
           <input
             type="email"
@@ -69,7 +75,7 @@ function CustomerChangePassword() {
             value={formData.email}
             onChange={handleChange}
           />
-        </label>
+        </label><br /><br />
         <label>
           Old Password:{" "}
           <input
@@ -78,7 +84,7 @@ function CustomerChangePassword() {
             value={formData.oldPassword}
             onChange={handleChange}
           />
-        </label>
+        </label><br /><br />
         <label>
           New Password:{" "}
           <input
@@ -87,11 +93,14 @@ function CustomerChangePassword() {
             value={formData.newPassword}
             onChange={handleChange}
           />
-        </label>
+        </label><br />
         {passwordError && <div>{passwordError}</div>}
-        <button type="submit">Change Password</button>
-        <button type="reset">Reset</button>
+        <div className="CCPbtns">
+        <button type="submit" className="btn btn-success">Change Password</button><br />
+        <button type="reset" className="btn btn-success CCPbtns2">Reset</button><br />
+        </div>
       </form>
+    </div>
     </div>
   );
 }

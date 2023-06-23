@@ -9,6 +9,7 @@ function CreateShoppingList(){
     const[customerId,setCustomerId]=useState(localStorage.getItem("customerId"));
     //alert(customerId);
     const { sku } = useParams();
+    const {productName}=useParams();
     const [successMessage, setSuccessMessage] = useState("");
     const [redirect, setRedirect] = useState(false);
     const [shoppingListFormdata, setShoppingListFormData] = useState({
@@ -67,10 +68,11 @@ function CreateShoppingList(){
         <NavBar />
          <div className="ShoppingListMainDiv">
             <h1 className="headingH1ShoppingList">Create Shopping Lists</h1>
+            <p className="productNameSL">Product Name : {productName}</p>
             <form onSubmit={handleSubmit} onReset={handleReset} className="ShoppingListForm">
               <label className="ShoppingListFormLabel">
                 Name Of the Shopping list :
-                &nbsp;<input type='text' name="name" onChange={handleChange} value={shoppingListFormdata.name} className="ShoppingListFormInput" />
+                <input type='text' name="name" onChange={handleChange} value={shoppingListFormdata.name} className="ShoppingListFormInput" />
               </label>
               <br />
               <label className="ShoppingListFormLabel">

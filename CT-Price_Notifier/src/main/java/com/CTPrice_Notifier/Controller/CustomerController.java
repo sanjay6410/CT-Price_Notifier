@@ -73,10 +73,10 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/customerProfileUpdate")
-	public ResponseEntity<?> customerProfileUpdate(@RequestParam("email") String email,@RequestParam("dob") LocalDate dob,
+	public ResponseEntity<?> customerProfileUpdate(@RequestParam("email") String email,
 			@RequestBody Address customerAddress){
 		try {
-			String status=customerService.customerInfoUpdate(email, dob, customerAddress);
+			String status=customerService.customerInfoUpdate(email, customerAddress);
 			return ResponseEntity.ok(status);
 			
 		}catch(Exception e) {

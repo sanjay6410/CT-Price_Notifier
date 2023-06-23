@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Button, Form, Table } from "react-bootstrap";
 import "./css/productlist.css";
@@ -6,7 +6,10 @@ import NavBar from "./NavBar";
 const TableRow = ({ product }) => {
   const handleClick = () => {
     // Redirect to another page
-    window.location = "/product/" + product.id;
+    const productName = product.masterData.current.name.en;
+const sanitizedProductName = productName.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-');
+window.location = "/product/" + product.id + "/" + sanitizedProductName;
+
   };
 
   return (

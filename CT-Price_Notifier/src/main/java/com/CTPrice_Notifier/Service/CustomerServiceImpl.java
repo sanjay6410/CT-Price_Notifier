@@ -87,7 +87,7 @@ public class CustomerServiceImpl implements CustomerService {
 		
 	}
 	
-	public String customerInfoUpdate(String email,LocalDate dob,Address customerAddress) {
+	public String customerInfoUpdate(String email,Address customerAddress) {
 		try {
 			CompletableFuture<Customer> customerCompletableFuture=customerDao.getCustomerByEmail(email);
 			Customer customer=customerCompletableFuture.get();
@@ -118,7 +118,6 @@ public class CustomerServiceImpl implements CustomerService {
 			
 			CustomerUpdate customerUpdate=CustomerUpdateBuilder.of()
 					.version(customer.getVersion())
-					.plusActions(t -> t.setDateOfBirthBuilder().dateOfBirth(dob))
 					.plusActions(t -> t.addAddressBuilder().address(newAddress))
 					.build();
 			

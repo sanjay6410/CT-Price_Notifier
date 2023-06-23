@@ -9,6 +9,7 @@ function AddProductToShoppingLists() {
   const [quantity, setQuantity] = useState(null);
   const [percentageNumber, setPercentageNumber] = useState(null);
   const { sku } = useParams();
+  const {productName }=useParams();
   const [successMessage, setSuccessMessage] = useState("");
   const [redirect, setRedirect] = useState(false);
   const [percentageNumberError, setPercentageNumberError]=useState("");
@@ -77,8 +78,10 @@ function AddProductToShoppingLists() {
     <div className="addProductDiv">
       
       <h1>Add Product To Shopping List</h1>
+      <p className="productNameASH">Product Name : {productName}</p>
       <form onSubmit={handleSubmit} onReset={handleReset} className="addProductToSLForm">
         <div className="addProductToSLFormField">
+          
         <label className="addProductToSLFormLabel">
           Quantity:
           <input name="quantity" type="number" value={quantity} onChange={handleChange} className="addProductToSLFormInput"/>
