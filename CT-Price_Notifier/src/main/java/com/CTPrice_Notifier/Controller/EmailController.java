@@ -17,4 +17,8 @@ public class EmailController {
 		mailService.sendSampleEmail("sanjayguptha13065@gmail.com", "This is from sprring boot application mail sender", 
 				"SampleEmail");
 	}
+	@PostMapping("/sendPriceDropEmail")
+	public void sendPriceDropEmail() {
+		mailService.sendEmailPriceDrop("sanjayguptha13065@gmail.com", "Bag", "Sanjay", 500L, 400l, 10L);
+	}
 }
