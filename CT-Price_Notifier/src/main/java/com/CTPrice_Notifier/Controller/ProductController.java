@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.CTPrice_Notifier.Model.ProductModel;
 import com.CTPrice_Notifier.Service.ProductService;
+import com.commercetools.api.models.customer.Customer;
 import com.commercetools.api.models.product.Product;
 import com.commercetools.api.models.product.ProductPagedQueryResponse;
 import com.commercetools.api.models.product.ProductProjectionPagedQueryResponse;
 import com.commercetools.api.models.product.ProductVariant;
 import com.commercetools.api.models.product_type.ProductTypePagedQueryResponse;
+import com.commercetools.api.models.shopping_list.ShoppingList;
+import com.commercetools.api.models.shopping_list.ShoppingListLineItem;
 
 import io.vrap.rmf.base.client.ApiHttpResponse;
 
@@ -59,6 +62,13 @@ public class ProductController {
 		return productService.getVariants(id);
 	}
 	
-
+	@GetMapping("/getAllShoppingListsByProductId")
+	public ShoppingListLineItem getAllShoppingListsByProductId(@RequestParam String id,@RequestParam Long varId){
+		return productService.getAllShoppingListsByProductId(id,varId);
+	}
 	
+	@GetMapping("/getCustomerDetailsByProductId")
+	public List<Customer> getCustomerDetailsByProductId(@RequestParam String id){
+		return productService.getCustomerDetailsByProductId(id);
+	}
 }
