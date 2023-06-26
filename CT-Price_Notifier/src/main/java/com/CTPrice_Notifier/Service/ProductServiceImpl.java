@@ -15,7 +15,6 @@ import com.CTPrice_Notifier.Model.ProductModel;
 import com.commercetools.api.client.ProjectApiRoot;
 import com.commercetools.api.models.common.LocalizedString;
 import com.commercetools.api.models.customer.Customer;
-import com.commercetools.api.models.customer.CustomerReference;
 import com.commercetools.api.models.product.Product;
 import com.commercetools.api.models.product.ProductDraft;
 import com.commercetools.api.models.product.ProductDraftBuilder;
@@ -28,6 +27,7 @@ import com.commercetools.api.models.product_type.ProductTypeResourceIdentifierBu
 import com.commercetools.api.models.shopping_list.ShoppingList;
 import com.commercetools.api.models.shopping_list.ShoppingListLineItem;
 import com.commercetools.api.models.shopping_list.ShoppingListPagedQueryResponse;
+import com.commercetools.api.models.shopping_list.ShoppingListUpdate;
 import com.commercetools.api.models.type.CustomFields;
 
 import io.vrap.rmf.base.client.ApiHttpException;
@@ -120,7 +120,15 @@ public class ProductServiceImpl implements ProductService {
 		        // Check if the line item matches the productId and variantId
 		        if (lineItem.getProductId().equals(prodId)&& lineItem.getVariantId()==variantId) {
 		            foundLineItem = lineItem;
-		            break; // Exit the loop if the line item is found
+		            ShoppingListUpdate listUpdate=ShoppingListUpdate.builder()
+		            		   .version(shoppingList.getVersion())
+		            		   .plusActions(t -> t.setLineItemCustomFieldBuilder()
+		            				   .lineItemId(lineItem.getId())
+		            				   
+		            				   .name("Price-Check-Status").value("inActive"))
+		            		   .build();
+		     		  ShoppingList list= par.shoppingLists().withId(shoppingList.getId()).post(listUpdate).executeBlocking().getBody();
+		               System.out.println(list.getId());
 		        }
 		        else {
 		        	System.out.println("lineitem is not present");
@@ -130,34 +138,42 @@ public class ProductServiceImpl implements ProductService {
 		    if (foundLineItem != null) {
 		        break; // Exit the outer loop if the line item is found in any shopping list
 		    }
-		}
+		
 		 CustomFields customFields = foundLineItem.getCustom();
 
 		    // Retrieve the "Percentage-Number" field
 		     Map<String, Object> percent = customFields.getFields().values();
 		    
 		  System.out.println(percent);
+		
+		}
 		  return foundLineItem;
 	}
 
 	@Override
 	public List<Customer> getCustomerDetailsByProductId(String id) {
 		ProjectApiRoot par = apiConfig.createApiClient();
-		List<ShoppingList> shoppinglists= par.shoppingLists()
-			    .get()
-			    .withWhere("lineItems(productId=:productId)")
-	            .withPredicateVar("productId", id)
-			    .executeBlocking()
-			    .getBody().getResults();
-		List<String> customers=new ArrayList<>();
-		for (ShoppingList shoppingList : shoppinglists) {
-			customers.add(shoppingList.getCustomer().getId());
-		}
-		List<Customer> customerDetails=new ArrayList<>();
-		for(String customer:customers) {
-			customerDetails.add(par.customers().withId(customer).get().executeBlocking().getBody().get());
-		}
-		return customerDetails;
+		 ShoppingListPagedQueryResponse shoppinglists = par.shoppingLists().get()
+	                .withWhere("lineItems(productId=:productId) and lineItems(variantId=:variantId)")
+	                .withPredicateVar("productId", id)
+	                .withPredicateVar("variantId", 1)
+	                .executeBlocking()
+	                .getBody();
+		 List<String> customerIds = new ArrayList<>();
+	        for (ShoppingList shoppingList : shoppinglists.getResults()) {
+	            customerIds.add(shoppingList.getCustomer().getId());
+	        }
+	        List<Customer> customers = new ArrayList<>();
+            for (String customerId : customerIds) {
+                Customer customer = par.customers().withId(customerId).get().executeBlocking().getBody();
+                customers.add(customer);
+               
+            }
+            for (Customer customer : customers) {
+               System.out.println(customer.getFirstName());
+              
+           
 	}
-
+            return customers;
+	}
 }
