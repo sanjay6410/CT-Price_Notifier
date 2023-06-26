@@ -1,9 +1,7 @@
-.redirect-btns{
+.homebtns{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 60px;
-    height: 400px;
-
+    padding-left: 40%;
+    margin-top: 19%;
 }
