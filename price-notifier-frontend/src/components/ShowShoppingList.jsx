@@ -97,9 +97,9 @@ function ShowShoppingList() {
     </tr>
   </tbody>
   <br />
-  <button onClick={(e) => handleRemoveProduct(e, item.id)} className="btn btn-warning">Remove Product</button>&nbsp;&nbsp;&nbsp;
+  <button onClick={(e) => handleRemoveProduct(e, item.id)} className="btn btn-warning ShowShoppingListsbtns">Remove Product</button>&nbsp;&nbsp;&nbsp;
   <br />
-  <button onClick={(e)=> handleUpdatePercentage(e, item.id)} className="btn btn-warning">Update Preferred Discount Percentage</button>
+  <button onClick={(e)=> handleUpdatePercentage(e, item.id)} className="btn btn-warning ShowShoppingListsbtns">Update Preferred Discount Percentage</button>
   <br />
   <hr />
 </Table>

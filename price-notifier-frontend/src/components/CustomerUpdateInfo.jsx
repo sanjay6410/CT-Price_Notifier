@@ -4,6 +4,7 @@ import axios from "axios";
 import "./css/CustomerUpdateInfo.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import NavBar from './NavBar';
 
 function EditProfile() {
   const [custId, setCustId] = useState(localStorage.getItem("customerId"));
@@ -27,10 +28,9 @@ function EditProfile() {
     email: "",
     password: "",
     mobileNumber: "",
-    dateOfBirth:""
+    
   });
   const [showAddressForm, setShowAddressForm] = useState(false);
-  const [showDatePicker, setShowDatePicker] = useState(false);
 
 
   const customerDataInfo = async () => {
@@ -42,7 +42,6 @@ function EditProfile() {
           email: response.data.email,
           password: response.data.password,
           mobileNumber: response.data.custom.fields["Customer-mobile-number"],
-          dateOfBirth:response.data.dateOfBirth
         });
         //setSelectedDate
       });
@@ -69,12 +68,7 @@ function EditProfile() {
     });
   };
 
-  const formatDate = (date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
+
 
   const handleAddAddress = (event) => {
     event.preventDefault();
@@ -98,27 +92,26 @@ function EditProfile() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post("http://localhost:8080/customerProfileUpdate?email=" + customerData.email + "&dob=2000-08-01", formData)
+    axios.post("http://localhost:8080/customerProfileUpdate?email=" + customerData.email , formData)
       .then((response) => {
         console.log(response.data);
       })
   };
-
-  const handleDateButtonClick = (e) => {
+  const handleChangePassword=(e)=>{
     e.preventDefault();
-    setShowDatePicker(true);
-  };
+    window.location.assign("/changePassword");
+  }
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    setShowDatePicker(false);
-  };
 
  
 
   return (
     <div>
-      <h1>Profile Update</h1>
+        <NavBar />
+   
+    <div className="CUIDivMain">
+    
+      <h1 className="CUIHeadingH1">Profile Update</h1>
       <form className="customerFormData">
         <label>
           First Name:
@@ -136,28 +129,14 @@ function EditProfile() {
           Mobile Number:
           &nbsp;<input type='text' name="mobileNumber" value={customerData.mobileNumber} readOnly/>
         </label>
-        <label>
-          Date Of Birth:
-          &nbsp;<input type='text' name="dateOfBirth" value={customerData.dateOfBirth} readOnly/>
-        </label>
-        <button onClick={handleAddAddress}>Add Address</button>
-        <button onClick={handleDateButtonClick}>Add Date of Birth</button>
-        {showDatePicker && (
-          <DatePicker
-            selected={selectedDate}
-            onChange={handleDateChange}
-            dateFormat="yyyy-MM-dd"
-            placeholderText="Select Date of Birth"
-          />
-        )}
-        {selectedDate && (
-          <p>Selected Date: {formatDate(selectedDate)}</p>
-        )}
+        <br />
+        <button onClick={handleAddAddress} className="btn btn-warning">Add Address</button><br />
+        <button onClick={handleChangePassword} className="btn btn-warning">Change Password</button><br />
       </form>
       {showAddressForm && (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="customerFormData">
           <label>
-          Country:
+          Country Code:
           <input type="text" name="country" value={formData.country} onChange={handleAddressChange} />
         </label>
         <label>
@@ -200,11 +179,14 @@ function EditProfile() {
           PO Box:
           <input type="text" name="pOBox" value={formData.pOBox} onChange={handleAddressChange} />
         </label>
-          <button onClick={handleAdrressFormClose}>Close</button>
-          <button onClick={handleReset}>Reset</button>
-          <button type="submit">Submit</button>
+        <div className="CUIbtns">
+          <button onClick={handleAdrressFormClose} className="btn btn-success">Close</button>&nbsp;&nbsp;
+          <button onClick={handleReset} className="btn btn-success">Reset</button>&nbsp;&nbsp;
+          <button type="submit" className="btn btn-success">Submit</button>&nbsp;&nbsp;
+          </div>
         </form>
       )}
+    </div>
     </div>
   );
 }

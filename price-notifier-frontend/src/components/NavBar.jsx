@@ -17,9 +17,14 @@ function NavBar(){
         window.localStorage.removeItem("customerId");
         window.location.assign("/");
     }
+    const handleUpdateProfile=(e)=>{
+      e.preventDefault();
+      window.location.assign("/updateCustomerInfo");
+    }
 
     const shouldRenderListOfProductsButton=window.location.pathname !== "/listProducts";
     const shouldRenderShoppingButton=window.location.pathname !== "/showShoppingList";
+    const shouldRenderUpdateProfileButton=window.location.pathname !== "/updateCustomerInfo";
 
     return (
         <div className="navBar">
@@ -34,7 +39,11 @@ function NavBar(){
         &nbsp; &nbsp; &nbsp;
         {shouldRenderListOfProductsButton && (
           <button onClick={handleListOfProducts} className="btn btn-primary">List Of Products</button>
+        )} &nbsp; &nbsp; &nbsp;
+        {shouldRenderUpdateProfileButton && (
+           <button onClick={handleUpdateProfile} className="btn btn-primary">Update Profile</button>
         )}
+       
       </div>
       <div className="logoutButton">
         <button onClick={handleLogout} className="btn btn-danger">Logout</button>

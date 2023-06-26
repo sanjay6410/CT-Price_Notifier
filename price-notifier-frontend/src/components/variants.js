@@ -14,6 +14,7 @@ function withParams(Component) {
 
 function Variants(props) {
   const { id } = props.params;
+  const  {productName} =props.params;
   const [variants, setVariants] = useState([]);
 
   useEffect(() => {
@@ -36,9 +37,9 @@ function Variants(props) {
       .then((response) => {
         console.log(response.data);
         if (response.data === "Exists") {
-          window.location.assign(`/addProductToShoppingLists/${sku}`);
+          window.location.assign(`/addProductToShoppingLists/${sku}/${productName}`);
         } else {
-          window.location.assign(`/createShoppingList/${sku}`);
+          window.location.assign(`/createShoppingList/${sku}/${productName}`);
         }
       });
   };
