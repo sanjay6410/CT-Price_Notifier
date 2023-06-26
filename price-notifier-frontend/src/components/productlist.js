@@ -91,6 +91,7 @@ class ProductList extends React.Component {
       <div>
         <NavBar />
 
+
         <Form>
           <h1 className="ProductListHeadingH1">List products</h1>
           <label htmlFor="search" className="ProductListLabel">
