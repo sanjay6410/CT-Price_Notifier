@@ -66,13 +66,16 @@ function Registration() {
     axios
       .post("http://localhost:8080/customerSignUp", formData)
       .then((response) => {
-        if (response.status === 200) {
+        if(response.data === "Customer Already Exists"){
+          alert("Customer Already Exists");
+        }
+        else if (response.status === 200) {
           setSuccessMessage("Signup Successful.");
           setRedirect(true);
 
           setTimeout(() => {
             
-            window.location.assign("/login"); 
+          window.location.assign("/login"); 
           }, 2000);
         } else {
           console.log(response.data);

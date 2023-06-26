@@ -12,6 +12,7 @@ import com.CTPrice_Notifier.Model.CustomerModelSignUp;
 import com.commercetools.api.models.customer.Customer;
 import com.commercetools.api.models.customer.CustomerDraft;
 import com.commercetools.api.models.customer.CustomerDraftBuilder;
+import com.commercetools.api.models.customer.CustomerPagedQueryResponse;
 import com.commercetools.api.models.type.CustomFieldsDraft;
 import com.commercetools.api.models.type.CustomFieldsDraftBuilder;
 import com.commercetools.api.models.type.TypeResourceIdentifier;
@@ -31,6 +32,11 @@ public class CustomerDaoImpl implements CustomerDao {
 	                return customer;
 				});
 	}
+	
+	public CustomerPagedQueryResponse getCustomerByEmailWithoutCompletableFuture(String email) {
+		return apiConfig.createApiClient().customers().get().withWhere("email=\""+email +"\"").executeBlocking().getBody();
+	}
+	
 	
 	public Customer getCustomerById(String custId) {
 		return apiConfig.createApiClient().customers().withId(custId).get().executeBlocking().getBody();

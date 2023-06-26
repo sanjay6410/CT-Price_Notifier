@@ -1,6 +1,5 @@
 package com.CTPrice_Notifier.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -19,6 +18,7 @@ import com.commercetools.api.models.customer.CustomerChangePassword;
 import com.commercetools.api.models.customer.CustomerChangePasswordBuilder;
 import com.commercetools.api.models.customer.CustomerCreatePasswordResetToken;
 import com.commercetools.api.models.customer.CustomerCreatePasswordResetTokenBuilder;
+import com.commercetools.api.models.customer.CustomerPagedQueryResponse;
 import com.commercetools.api.models.customer.CustomerResetPassword;
 import com.commercetools.api.models.customer.CustomerResetPasswordBuilder;
 import com.commercetools.api.models.customer.CustomerToken;
@@ -44,8 +44,19 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	public String customerSignUp(CustomerModelSignUp customerModelSignUp) {
-		return customerDao.customerSignUp(customerModelSignUp);
+		
+		CustomerPagedQueryResponse customerPagedQueryResponse=customerDao.getCustomerByEmailWithoutCompletableFuture(customerModelSignUp.getEmail());
+		if(customerPagedQueryResponse.getResults().isEmpty()) {
+			//System.out.println("customer not there");
+			return customerDao.customerSignUp(customerModelSignUp);
+		}else {
+			//System.out.println("is there");
+			return "Customer Already Exists";
+		}
+		
 	}
+
+
 	
 	
 	public String  customerChangePassword(String email,String newPassword,String oldPassword) throws InterruptedException, ExecutionException {

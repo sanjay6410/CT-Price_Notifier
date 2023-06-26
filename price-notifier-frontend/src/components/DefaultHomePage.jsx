@@ -1,6 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
-import './css/DefaultPage.css'
+import './css/DefaultPage.css';
 
 function DefaultPage() {
   const handleLoginClick = () => {
@@ -12,9 +11,9 @@ function DefaultPage() {
   };
 
   return (
-    <div className="redirect-btns">
-      <Button onClick={handleLoginClick}>Login Page</Button>
-      <Button onClick={handleRegistrationClick}>Registration Page</Button>
+    <div className="homebtns">
+      <button onClick={handleLoginClick} className="btn btn-primary">Login Page</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button onClick={handleRegistrationClick} className="btn btn-primary">Registration Page</button>
     </div>
   );
 }
