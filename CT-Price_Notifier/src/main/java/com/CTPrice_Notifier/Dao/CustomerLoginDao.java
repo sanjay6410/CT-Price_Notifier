@@ -1,12 +1,11 @@
-package com.CTPrice_Notifier.Service;
+package com.CTPrice_Notifier.Dao;
 
 import com.commercetools.api.models.customer.Customer;
 import com.commercetools.api.models.customer.CustomerSignInResult;
 
-public interface RegisterService {
+public interface CustomerLoginDao {
 
-	 CustomerSignInResult login(Customer customer);
-
+	CustomerSignInResult login(Customer customer);
 
 
 }

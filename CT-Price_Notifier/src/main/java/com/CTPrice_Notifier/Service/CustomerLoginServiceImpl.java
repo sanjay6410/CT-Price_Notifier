@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.CTPrice_Notifier.Config.ProjectApiConfig;
-import com.CTPrice_Notifier.Dao.RegisterDao;
+import com.CTPrice_Notifier.Dao.CustomerLoginDao;
 import com.commercetools.api.client.ProjectApiRoot;
 import com.commercetools.api.models.customer.Customer;
 import com.commercetools.api.models.customer.CustomerDraft;
@@ -13,16 +13,16 @@ import com.commercetools.api.models.customer.CustomerSignInResult;
 import com.commercetools.api.models.customer.CustomerSignin;
 
 @Service
-public class RegisterServiceImpl implements RegisterService{
+public class CustomerLoginServiceImpl implements CustomerLoginService{
 
 
 	
 	@Autowired
-	private RegisterDao registerDao;
+	private CustomerLoginDao customerLoginDao;
 	
 	@Override
 	public CustomerSignInResult login(Customer customer) {
-		return registerDao.login(customer);
+		return customerLoginDao.login(customer);
 		 
 	}
 

@@ -130,7 +130,7 @@ public class ProductServiceImpl implements ProductService {
 		            				   .name("Price-Check-Status").value("inActive"))
 		            		   .build();
 		     		  ShoppingList list1= par.shoppingLists().withId(shoppingList.getId()).post(listUpdate).executeBlocking().getBody();
-		               System.out.println(list.getId());
+		               System.out.println(list1.getId());
 		        }
 		        else {
 		        	System.out.println("lineitem is not present");

@@ -13,7 +13,7 @@ import com.commercetools.api.models.customer.CustomerSignin;
 import com.commercetools.api.models.customer.CustomerSigninBuilder;
 
 @Service
-public class RegisterDaoImpl implements RegisterDao {
+public class CustomerLoginDaoImpl implements CustomerLoginDao {
 
 	@Autowired
 	private ProjectApiConfig apiConfig;
