@@ -1,6 +1,5 @@
 package com.CTPrice_Notifier.Controller;
 
-import java.time.LocalDate;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 

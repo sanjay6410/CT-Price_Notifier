@@ -86,7 +86,7 @@ class ProductList extends React.Component {
         <NavBar />
       
       <Form>
-        <h1 className="ProductListHeadingH1">List products</h1>
+        <h1 className="ProductListHeadingH1">List Of products</h1>
         <label htmlFor="search" className="ProductListLabel">Search By Sku</label>
         <input
           type="text"
