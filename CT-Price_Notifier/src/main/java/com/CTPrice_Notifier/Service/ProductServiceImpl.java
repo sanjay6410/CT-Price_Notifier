@@ -114,20 +114,22 @@ public class ProductServiceImpl implements ProductService {
 	                .executeBlocking()
 	                .getBody();
 		// Iterate through each shopping list
+	
 		for (ShoppingList shoppingList : shoppingListResponse.getResults()) {
 		    List<ShoppingListLineItem> lineItems = shoppingList.getLineItems();
 		    for (ShoppingListLineItem lineItem : lineItems) {
 		        // Check if the line item matches the productId and variantId
 		        if (lineItem.getProductId().equals(prodId)&& lineItem.getVariantId()==variantId) {
 		            foundLineItem = lineItem;
+		            ShoppingList list=par.shoppingLists().withId(shoppingList.getId()).get().executeBlocking().getBody();
 		            ShoppingListUpdate listUpdate=ShoppingListUpdate.builder()
-		            		   .version(shoppingList.getVersion())
+		            		   .version(list.getVersion())
 		            		   .plusActions(t -> t.setLineItemCustomFieldBuilder()
 		            				   .lineItemId(lineItem.getId())
 		            				   
 		            				   .name("Price-Check-Status").value("inActive"))
 		            		   .build();
-		     		  ShoppingList list= par.shoppingLists().withId(shoppingList.getId()).post(listUpdate).executeBlocking().getBody();
+		     		  ShoppingList list1= par.shoppingLists().withId(shoppingList.getId()).post(listUpdate).executeBlocking().getBody();
 		               System.out.println(list.getId());
 		        }
 		        else {

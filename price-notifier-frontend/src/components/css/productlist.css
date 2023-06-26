@@ -29,9 +29,14 @@
     margin-left: 1%;
     margin-bottom: 20px;
   }
-  .ProductListButton{
+  .ProductListButton {
     margin-left: 48%;
+    padding: 10px 10px; /* Adjust the padding as needed to decrease the button size */
+    font-size: 15px;
+   
+    width: 150px; /* Adjust the font size as needed */
   }
+  
   .ProductListLabel{
     margin-left: 40%;
   }
