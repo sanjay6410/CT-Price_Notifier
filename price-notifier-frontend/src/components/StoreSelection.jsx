@@ -9,7 +9,7 @@ function StoreSelection(){
     }
     return (
         <div>
-            <h1>Strore Selection </h1>
+            <h1>Store Selection </h1>
             <button onClick={handleUsStore}>US STORE</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button onClick={handleDeStore}>DE(Germany) STORE </button>
         </div>
