@@ -1,4 +1,5 @@
 import React from "react";
+import './css/StoreSelection.css';
 
 function StoreSelection(){
     const handleUsStore=(e)=>{
@@ -8,10 +9,12 @@ function StoreSelection(){
         window.location.assign("/listProducts"+"/DE")
     }
     return (
-        <div>
+        <div className="storeSelectionMainDiv">
             <h1>Store Selection </h1>
-            <button onClick={handleUsStore}>US STORE</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button onClick={handleDeStore}>DE(Germany) STORE </button>
+            <div className="storeSelectionBtns">
+            <button onClick={handleUsStore} className="btn btn-warning">US STORE</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button onClick={handleDeStore} className="btn btn-warning">DE(Germany) STORE </button>
+            </div>
         </div>
     );
 }

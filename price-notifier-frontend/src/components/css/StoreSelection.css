@@ -1,0 +1,10 @@
+.storeSelectionMainDiv{
+    /* display: flex;
+    flex-direction: column; */
+    margin-left: 40%;
+    margin-top: 15%;
+}
+.storeSelectionBtns{
+    margin-top: 35px;
+    margin-left: -10px;
+}
