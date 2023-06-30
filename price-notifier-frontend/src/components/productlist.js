@@ -25,9 +25,9 @@ const TableRow = ({ product }) => {
             />
           )}
         </td>
-        <td>{product.masterData.current.name.en}</td>
-        <td>{product.key}</td>
-        <td>{product.masterData.published ? "published" : "modified"}</td>
+        <td>{product.masterData.staged.name.en}</td>
+        {/* <td>{product.key}</td>
+        <td>{product.masterData.published ? "Published" : "Modified"}</td> */}
         <td>{product.lastModifiedAt}</td>
         <td>{product.createdAt}</td>
       </tr>
@@ -54,6 +54,7 @@ class ProductList extends React.Component {
       .get("http://localhost:8080/listProducts")
       .then((response) => {
         const data = response.data;
+        console.log(data);
         this.setState({ products: data });
       })
       .catch((error) => {
@@ -123,8 +124,8 @@ class ProductList extends React.Component {
                 <tr>
                   <th>Image</th>
                   <th>Product Name</th>
-                  <th>Product Key</th>
-                  <th>Status</th>
+                  {/* <th>Product Key</th>
+                  <th>Status</th> */}
                   <th>Date Modified</th>
                   <th>Date Created</th>
                 </tr>
