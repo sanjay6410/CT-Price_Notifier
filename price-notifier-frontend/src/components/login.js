@@ -33,7 +33,7 @@ class Login extends React.Component {
             successMsg: "Login successful",
             errorMsg: "",
           });
-          window.location="/listProducts";
+          window.location="/storeSelection";
         }
       })
       .catch(error => {

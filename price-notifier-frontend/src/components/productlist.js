@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button, Form, Table } from "react-bootstrap";
 import "./css/productlist.css";
 import NavBar from "./NavBar";
+import { useParams } from "react-router-dom";
 
 const TableRow = ({ product }) => {
     const handleClick = () => {
@@ -11,6 +12,7 @@ const TableRow = ({ product }) => {
       const sanitizedProductName = productName.replace(/[^\w\s]/gi, "").replace(/\s+/g, "-");
       window.location = "/product/" + product.id + "/" + sanitizedProductName;
     };
+  
   
     return (
       <tr onClick={handleClick}>

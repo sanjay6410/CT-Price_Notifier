@@ -36,9 +36,20 @@ function CreateShoppingList(){
         }));
     };
 
+    const validateDiscountPercentage = (discountPercentage) => {
+      const regex = /^(?:100|[1-9][0-9]?)$/;
+      return regex.test(discountPercentage);
+    };
+
 
     const handleSubmit=(e)=>{
         e.preventDefault();
+
+        if(!validateDiscountPercentage(shoppingListFormdata.percentageNumber)){
+          alert("Preferred Discount Percentage Should be less than 100");
+          return "";
+        }
+
         axios.post("http://localhost:8080/createShoppingLists?custId="+customerId+"&sku="+sku,shoppingListFormdata)
           .then((response)=>{
             console.log(response);
@@ -63,6 +74,11 @@ function CreateShoppingList(){
         </div>
       );
     }
+
+
+
+
+
     return (
       <div>
         <NavBar />
