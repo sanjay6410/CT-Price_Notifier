@@ -12,6 +12,7 @@ import CreateShoppingList from './components/ShoppingList';
 import ShowShoppingList from './components/ShowShoppingList';
 import AddProductToShoppingLists from './components/AddProductToShoppingList';
 import NavBar from './components/NavBar';
+import StoreSelection from './components/StoreSelection';
 
 
 import ProductList from './components/productlist';
@@ -30,9 +31,10 @@ function App() {
     <Route path='/createShoppingList/:sku/:productName' element={<CreateShoppingList/>} />
     <Route path='/showShoppingList' element={<ShowShoppingList/>} />
     <Route path='/addProductToShoppingLists/:sku/:productName' element={<AddProductToShoppingLists/>} />
+    <Route path='/storeSelection' element={<StoreSelection/>} />
     <Route path='/' element={<DefaultPage/>}></Route>
      <Route path='/addProducts/:id' element={<AddProduct/>}/> 
-     <Route path='/listProducts' element={<ProductList/>}/>
+     <Route path='/listProducts/:countryCode' element={<ProductList/>}/>
      <Route path='/navbar' element={<NavBar/>}/>
  
      <Route path='/product/:id/:productName' element={<Variants/>}/>

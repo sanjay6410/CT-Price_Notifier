@@ -31,6 +31,12 @@ function ShowShoppingList() {
     shoppingListInfo();
   }, []);
 
+  const validateDiscountPercentage = (discountPercentage) => {
+    const regex = /^(?:100|[1-9][0-9]?)$/;
+    return regex.test(discountPercentage);
+  };
+  
+
   const handleRemoveProduct = (e, itemId) => {
     e.preventDefault();
     console.log(itemId);
@@ -55,6 +61,11 @@ function ShowShoppingList() {
     e.preventDefault();
     const input=prompt('Enter Preferred Discount Percentage');
     console.log(input);
+
+    if(!validateDiscountPercentage(input)){
+      alert("Preffered Discount percentage should be less than 100");
+      return;
+    }
     axios.post("http://localhost:8080/updateShoppingListChangePercentageNumber?customerId="
                   +customerId+"&percentageNumber="+input+"&lineItemId="+itemId).then((response)=>{
                    // console.log(response.data);
