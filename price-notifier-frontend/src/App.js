@@ -37,7 +37,7 @@ function App() {
      <Route path='/listProducts/:countryCode' element={<ProductList/>}/>
      <Route path='/navbar' element={<NavBar/>}/>
  
-     <Route path='/product/:id/:productName' element={<Variants/>}/>
+     <Route path='/product/:id/:productName/:countryCode' element={<Variants/>}/>
     </Routes>
      </BrowserRouter>
      </div>

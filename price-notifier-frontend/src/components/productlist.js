@@ -1,49 +1,50 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import { Button, Form, Table } from "react-bootstrap";
 import "./css/productlist.css";
 import NavBar from "./NavBar";
 import { useParams } from "react-router-dom";
 
-
 function withParams(Component) {
-    return (props) => {
-      const params = useParams();
-      return <Component {...props} params={params} />;
-    };
-  }
-  
-const TableRow = ({ product }) => {
-    const handleClick = () => {
-      // Redirect to another page
-      const productName = product.masterData.current.name.en;
-      const sanitizedProductName = productName.replace(/[^\w\s]/gi, "").replace(/\s+/g, "-");
-      window.location = "/product/" + product.id + "/" + sanitizedProductName;
-    };
-  
-  
+  return (props) => {
+    const params = useParams();
+    return <Component {...props} params={params} />;
+  };
+}
+
+class TableRow extends Component {
+  handleClick = () => {
+    const { countryCode } = this.props.params;
+    console.log(countryCode)
+    const { product } = this.props;
+    const productName = product.masterData.current.name.en;
+    const sanitizedProductName = productName.replace(/[^\w\s]/gi, "").replace(/\s+/g, "-");
+    window.location = `/product/${product.id}/${sanitizedProductName}/${countryCode}`;
+  };
+
+  render() {
+    const { product } = this.props;
+
     return (
-      <tr onClick={handleClick}>
+      <tr onClick={this.handleClick}>
         <td>
           {product.masterData.current.masterVariant.images.length > 0 && (
             <img
               src={product.masterData.current.masterVariant.images[0].url}
               alt="Product"
-              style={{ width: "100px", height: "100px" }} // Adjust the width and height as needed
+              style={{ width: "100px", height: "100px" }}
             />
           )}
         </td>
         <td>{product.masterData.staged.name.en}</td>
-        {/* <td>{product.key}</td>
-        <td>{product.masterData.published ? "Published" : "Modified"}</td> */}
         <td>{product.lastModifiedAt}</td>
         <td>{product.createdAt}</td>
       </tr>
     );
-  };
-  
+  }
+}
 
-class ProductList extends React.Component {
+class ProductList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,9 +59,6 @@ class ProductList extends React.Component {
   }
 
   fetchProducts = () => {
-    const { params } = this.props; // Access the params from props
-    const { currency } = params; // Extract the currency parameter
-  
     axios
       .get("http://localhost:8080/listProducts")
       .then((response) => {
@@ -72,7 +70,7 @@ class ProductList extends React.Component {
         console.error("Error fetching products:", error);
       });
   };
-  
+
   handleSearch = (event) => {
     event.preventDefault();
     const sku = document.getElementById("search").value;
@@ -104,8 +102,6 @@ class ProductList extends React.Component {
     return (
       <div>
         <NavBar />
-
-
         <Form>
           <h1 className="ProductListHeadingH1">List products</h1>
           <label htmlFor="search" className="ProductListLabel">
@@ -118,32 +114,34 @@ class ProductList extends React.Component {
             onChange={this.handleInputChange}
             className="ProductListInput"
           />
-          <br/>
+          <br />
           <div>
-          <Button className="button ProductListButton" variant="primary" align="right" onClick={this.handleSearch}>
-            Search
-          </Button>
-          <br/>
+            <Button
+              className="button ProductListButton"
+              variant="primary"
+              align="right"
+              onClick={this.handleSearch}
+            >
+              Search
+            </Button>
+            <br />
           </div>
-          <br/>
-       
+          <br />
+
           {errorMsg && <div className="error">{errorMsg}</div>}
           {products.length > 0 && (
-         
             <Table className="table">
               <thead>
                 <tr>
                   <th>Image</th>
                   <th>Product Name</th>
-                  {/* <th>Product Key</th>
-                  <th>Status</th> */}
                   <th>Date Modified</th>
                   <th>Date Created</th>
                 </tr>
               </thead>
               <tbody>
                 {products.map((product) => (
-                  <TableRow key={product.id} product={product} />
+                  <TableRow key={product.id} product={product} params={this.props.params} />
                 ))}
               </tbody>
             </Table>
