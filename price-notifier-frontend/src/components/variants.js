@@ -29,8 +29,6 @@ function Variants(props) {
       });
   }, [id]);
 
-
-
   const handleAddShoppingList = (sku) => {
     const customerId = window.localStorage.getItem("customerId");
     axios
@@ -52,6 +50,32 @@ function Variants(props) {
     return symbol + (centAmount / 100).toFixed(2);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let modifiedCountryCode = countryCode;
+        if (modifiedCountryCode === "US") {
+          modifiedCountryCode = "USD";
+        } else if (modifiedCountryCode === "DE") {
+          modifiedCountryCode = "EUR";
+        }
+
+        const priceData = {};
+        for (const variant of variants) {
+          const response = await axios.post(
+            `http://localhost:8080/getPriceForProduct?sku=${variant.sku}&currencyCode=${modifiedCountryCode}`
+          );
+          priceData[variant.sku] = response.data;
+        }
+        setPriceVariants(priceData);
+      } catch (error) {
+        console.error("Error fetching price variants:", error);
+      }
+    };
+
+    fetchData();
+  }, [countryCode, variants]);
+
   return (
     <div className="VariantsDivMain">
       <NavBar />
@@ -64,67 +88,33 @@ function Variants(props) {
               <th>SKU</th>
               <th>Key</th>
               <th>Cent Amount</th>
-              {/* <th>Price Variant</th> */}
               <th>Action</th>
             </tr>
           </thead>
-         <tbody>
-  {variants.map((variant) => {
-    const fetchData = async () => {
-          if(countryCode=="US"){
-            countryCode==="USD"
-          }
-          if(countryCode==="DE")
-          {
-            countryCode="EUR"
-          }
-            
-              for (const variant of variants) {
-                try {
-                  const response = await axios.get(
-                    `http://localhost:8080/getPriceForProduct?sku=${variant.sku}&currencyCode=${countryCode}`
-                  );
-                  setPriceVariants(response.data);
-                } catch (error) {
-                  console.error(`Error fetching price for variant ${variant.sku}:`, error);
-               
-                }
-              }
-              
-            };
-            fetchData();
-            {priceVariants.map((pricevariant) => {
-              const price = pricevariant.prices.length > 0 ? pricevariant.prices[0] : null;
-              const centAmount = price ? price.value.centAmount : null;
-              const currencyCode = price ? price.value.currencyCode : null;
-              const formattedPrice = centAmount
-                ? formatCentAmount(centAmount, currencyCode)
-                : null;
-           
-   
-    return (
-      <tr key={pricevariant.id}>
-        <td>{pricevariant.id}</td>
-        <td>{pricevariant.sku}</td>
-        <td>{pricevariant.key}</td>
-        <td>{formattedPrice}</td>
-        <td>
-          <Button
-            variant="primary"
-            align="right"
-            onClick={() => handleAddShoppingList(variant.sku)}
-          >
-            Add To Shopping List
-          </Button>
-        </td>
-      </tr>
-      
-    );
-  });
-}
-  })}
-</tbody>
+          <tbody>
+            {variants.map((variant) => {
+              const price = priceVariants[variant.sku];
+              const formattedPrice = price ? formatCentAmount(price.value.centAmount, price.value.currencyCode) : null;
 
+              return (
+                <tr key={variant.id}>
+                  <td>{variant.id}</td>
+                  <td>{variant.sku}</td>
+                  <td>{variant.key}</td>
+                  <td>{formattedPrice}</td>
+                  <td>
+                    <Button
+                      variant="primary"
+                      align="right"
+                      onClick={() => handleAddShoppingList(variant.sku)}
+                    >
+                      Add To Shopping List
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
         </Table>
       </Form>
     </div>
