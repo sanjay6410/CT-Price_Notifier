@@ -4,9 +4,11 @@ import './css/StoreSelection.css';
 function StoreSelection(){
     const handleUsStore=(e)=>{
         window.location.assign("/listProducts"+"/US")
+        window.localStorage.setItem("storeSelected","US")
     }
     const handleDeStore=(e)=>{
         window.location.assign("/listProducts"+"/DE")
+        window.localStorage.setItem("storeSelected","DE")
     }
     return (
         <div className="storeSelectionMainDiv">

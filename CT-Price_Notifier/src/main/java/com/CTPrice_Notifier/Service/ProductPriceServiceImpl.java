@@ -84,7 +84,7 @@ public class ProductPriceServiceImpl implements ProductPriceService {
 	        }
 		}catch(Exception e) {
 			throw new RuntimeException("Excetion while retriving the price of the product "+e.getMessage());
-		}
+		} 
 	}
 
 }

@@ -1,8 +1,11 @@
 import { Button } from "bootstrap";
 import React from "react";
 import "./css/NavBar.css";
+import { useState } from "react";
 
 function NavBar(){
+
+    const [storeSelected,setStoreSelected]=useState(localStorage.getItem("storeSelected"));
 
     const handleShoppingList=(e)=>{
         e.preventDefault();
@@ -10,11 +13,12 @@ function NavBar(){
     }
     const handleListOfProducts=(e)=>{
         e.preventDefault();
-        window.location.assign("/listProducts");
+        window.location.assign("/listProducts/"+storeSelected);
     }
     const handleLogout=(e)=>{
         e.preventDefault();
         window.localStorage.removeItem("customerId");
+        window.localStorage.removeItem("storeSelected");
         window.location.assign("/");
     }
     const handleUpdateProfile=(e)=>{
@@ -22,7 +26,7 @@ function NavBar(){
       window.location.assign("/updateCustomerInfo");
     }
 
-    const shouldRenderListOfProductsButton=window.location.pathname !== "/listProducts";
+    const shouldRenderListOfProductsButton=window.location.pathname !== "/listProducts/"+storeSelected;
     const shouldRenderShoppingButton=window.location.pathname !== "/showShoppingList";
     const shouldRenderUpdateProfileButton=window.location.pathname !== "/updateCustomerInfo";
 
