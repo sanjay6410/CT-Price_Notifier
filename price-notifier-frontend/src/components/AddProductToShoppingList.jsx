@@ -6,8 +6,8 @@ import NavBar from './NavBar';
 
 function AddProductToShoppingLists() {
   const [customerId, setCustomerId] = useState(localStorage.getItem("customerId"));
-  const [quantity, setQuantity] = useState(null);
-  const [percentageNumber, setPercentageNumber] = useState(null);
+  const [quantity, setQuantity] = useState("");
+  const [percentageNumber, setPercentageNumber] = useState("");
   const { sku } = useParams();
   const {productName }=useParams();
   const [successMessage, setSuccessMessage] = useState("");
@@ -24,8 +24,8 @@ function AddProductToShoppingLists() {
 
   const handleReset = (e) => {
     e.preventDefault();
-    setQuantity(null);
-    setPercentageNumber(null);
+    setQuantity('');
+    setPercentageNumber('');
     setPercentageNumberError(null);
   };
   
