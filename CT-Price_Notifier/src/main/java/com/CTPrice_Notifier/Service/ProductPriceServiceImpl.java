@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.CTPrice_Notifier.Config.ProjectApiConfig;
+import com.CTPrice_Notifier.Exception.ProductNotFoundException;
 import com.commercetools.api.models.common.Price;
 import com.commercetools.api.models.product.Product;
 import com.commercetools.api.models.product.ProductPagedQueryResponse;
@@ -29,7 +31,7 @@ public class ProductPriceServiceImpl implements ProductPriceService {
 	                .thenApply(t -> t.getBody());
 
 	        Optional<Product> productOptional = Optional.ofNullable(listOfProducts.get().getResults().get(0));
-	        Product product = productOptional.orElseThrow(() -> new RuntimeException("Product Not Found"));
+	        Product product = productOptional.orElseThrow(() -> new RuntimeException("Product Not Found With Sku : "+sku));
 //	        System.out.println(product);
 
 	        List<Price> productPricesMasterVariant = product.getMasterData().getCurrent().getMasterVariant().getPrices();
@@ -83,7 +85,7 @@ public class ProductPriceServiceImpl implements ProductPriceService {
 	        	return null;
 	        }
 		}catch(Exception e) {
-			throw new RuntimeException("Excetion while retriving the price of the product "+e.getMessage());
+			throw new ProductNotFoundException("Exception while retriving the price of the product ");
 		} 
 	}
 
