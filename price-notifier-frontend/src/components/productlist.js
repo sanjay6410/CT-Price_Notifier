@@ -5,6 +5,14 @@ import "./css/productlist.css";
 import NavBar from "./NavBar";
 import { useParams } from "react-router-dom";
 
+
+function withParams(Component) {
+    return (props) => {
+      const params = useParams();
+      return <Component {...props} params={params} />;
+    };
+  }
+  
 const TableRow = ({ product }) => {
     const handleClick = () => {
       // Redirect to another page
@@ -50,6 +58,9 @@ class ProductList extends React.Component {
   }
 
   fetchProducts = () => {
+    const { params } = this.props; // Access the params from props
+    const { currency } = params; // Extract the currency parameter
+  
     axios
       .get("http://localhost:8080/listProducts")
       .then((response) => {
@@ -61,7 +72,7 @@ class ProductList extends React.Component {
         console.error("Error fetching products:", error);
       });
   };
-
+  
   handleSearch = (event) => {
     event.preventDefault();
     const sku = document.getElementById("search").value;
@@ -143,4 +154,4 @@ class ProductList extends React.Component {
   }
 }
 
-export default ProductList;
+export default withParams(ProductList);
